@@ -147,7 +147,8 @@ Alors l'application \(D : E × E → F\)
 #### Exercice 1
 
 1. Distance de Manhattan
-2. Distance de l'échiquier
+2. Distance de l'échiquier 2^2
+3. 
 
 #### Exercice 2
 
@@ -156,6 +157,12 @@ Alors l'application \(D : E × E → F\)
 2. \(\begin{vmatrix}2 & 1 & 2\\1 & 0 & 1\\2 & 1 & 4\end{vmatrix}\) et \(\begin{vmatrix}14 & 11 & 10 & 11 & 14\\11 & 7 & 5 & 7 & 11\\10 & 5 & 0 & 5 & 10\\11 & 7 & 5 & 7 & 11\\14 & 11 & 10 & 11 & 14\end{vmatrix}\)
 
 #### Exercice 3
+
+$$
+\cos(\theta) + bonjour = 2^4
+$$
+
+
 
 
 

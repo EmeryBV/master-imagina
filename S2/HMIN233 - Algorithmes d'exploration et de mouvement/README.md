@@ -361,4 +361,31 @@ reviens à retourner au moins la base plus les autres maximums.
 
 ### Exercice 3
 
+(A compléter)
+
+### [TD3 - Frequent itemset mining III](TDs/TD3 - Frequent itemset mining III.pdf) 
+
+#### Exercice 1
+
+Exemple du cours (Slide 13)
+
+```mermaid
+graph TB
+	A(("LCM(∅)")) --> B("clos(A) = AC")
+	A --> C("clos(B) = BE")
+	A --> D("clos(C) = C")
+	B --> E(("LCM(AC)"))
+	D --> F("clos(CD) = ACD")
+	E --> G("clos(ACD) = ACD")
+	E --> H("clos(ACE) = ABCE")
+	G --> I("freq(ACDE) = 0")
+```
+
+
+
+
+
+
+
+
 

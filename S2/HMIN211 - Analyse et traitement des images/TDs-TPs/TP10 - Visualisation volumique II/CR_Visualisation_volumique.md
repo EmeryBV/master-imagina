@@ -1,13 +1,23 @@
+`(TOC)`
+
+
+
 # Visualisation Volumique (Odorico Thibault)
 
-## Lecture est stockage d'image 3D
+### Images
 
-les images 3D de ce TP sont une suite d'image 2D stocké de manière contigu dans un fichier avec chaque pixel codé sur 2 bytes (unsigned short)
 
-### Chargement en mémoire
+#### Engine 100
 
-- image 3D : tableau d'image 2D de taille dimZ.
-- image 2D : tableau de pixel de taille dimX * dimY.
+![engine_100](images/engine_100.png)
+
+#### Engine 200
+
+![engine_200](images/engine_200.png)
+
+#### Manix 900
+
+![manix_900](images/manix_900.png)
 
 ### Code
 
@@ -17,6 +27,7 @@ les images 3D de ce TP sont une suite d'image 2D stocké de manière contigu dan
 #include <vector>
 #include <limits>
 #include <algorithm>
+#include "Point3.h"
 
 using namespace std;
 
@@ -26,7 +37,7 @@ typedef unsigned short PIXEL;
 typedef vector<PIXEL> IMAGE_2D;
 typedef vector<IMAGE_2D> IMAGE_3D;
 
-// Creation d'une image 2D a partir d'un fichier
+// Creation d'une image 2D a partir d'un flux d'entrée
 
 std::istream& read(std::istream& is, IMAGE_2D& image2d, int dim_x, int dim_y)
 {
@@ -42,18 +53,36 @@ std::istream& read(std::istream& is, IMAGE_2D& image2d, int dim_x, int dim_y)
 	return is;
 }
 
-// Creation d'une image 3D a partir d'un fichier
+// Creation d'une image 3D a partir d'un flux d'entrée
 
 std::istream& read(std::istream& is, IMAGE_3D& image3d, int dim_x, int dim_y, int dim_z)
 {
 	image3d.resize(dim_z);
 
 	for (IMAGE_2D& image2d : image3d)
-	{
 		read(is, image2d, dim_x, dim_y);
-	}
 
 	return is;
+}
+
+// Ecriture d'une image 2D dans un flux de sortie
+
+std::ostream& write(std::ostream& os, const IMAGE_2D& image2d)
+{
+	for (const PIXEL& p : image2d)
+		os.write((char*)&p, sizeof(p));
+
+	return os;
+}
+
+// Ecriture d'une image 3D dans un flux de sortie
+
+std::ostream& write(std::ostream& os, const IMAGE_3D& image3d)
+{
+	for (const IMAGE_2D& image2d : image3d)
+		write(os, image2d);
+
+	return os;
 }
 
 // Accesseur au pixel de l'image 2d
@@ -71,65 +100,227 @@ PIXEL voxel(const IMAGE_3D& image3d, int i, int j, int k, int dim_x, int dim_y)
 	return pixel(image3d[k], i, j, dim_x, dim_y);
 }
 
-PIXEL min(const IMAGE_3D& image3d)
+struct Triangle 
 {
-	PIXEL min = numeric_limits<PIXEL>::max();
+	Point3 a, b, c;
 
-	for (const IMAGE_2D& image2d : image3d)
+	Triangle() : a(), b(), c() {};
+	Triangle(Point3 a, Point3 b, Point3 c) : a(a), b(b), c(c) {};
+};
+
+vector<Triangle> neighbors_faces(const IMAGE_3D& image3d, PIXEL seuil, size_t x, size_t y, size_t z, double size_vox_x, double size_vox_y, double size_vox_z, size_t dim_x, size_t dim_y)
+{
+	double right = (x + 0.5) * size_vox_x;
+	double left = (x - 0.5) * size_vox_x;
+	
+	double bottom = (y + 0.5) * size_vox_y;
+	double top = (y - 0.5) * size_vox_y;
+
+	double forward = (z + 0.5) * size_vox_z;
+	double backward = (z - 0.5) * size_vox_z;
+
+/*
+	cerr << "(x, y, z) : " << x << ", " << y << ", " << z << "\n";
+	cerr << "right : " << right << "\n";
+	cerr << "right : " << right << "\n";
+	cerr << "left : " << left << "\n";
+	cerr << "bottom : " << bottom << "\n";
+	cerr << "top : " << top << "\n";
+	cerr << "forward : " << forward << "\n";
+	cerr << "backward : " << backward << "\n";
+*/
+
+	vector<Triangle> triangles;
+
+	int x_offset = x;
+	int y_offset = y;
+	int z_offset = z - 1;
+
+	if (voxel(image3d, x_offset, y_offset, z_offset, dim_x, dim_y) < seuil)
 	{
-		auto current_min = min_element(image2d.begin(), image2d.end());
+		// Triangle 1
+
+		triangles.push_back(Triangle(
+			{left, top, backward},
+			{right, top, backward},
+			{left, bottom, backward}
+		));
 		
-		if (*current_min < min)
-			min = *current_min;
+		// Triangle 2
+		
+		triangles.push_back(Triangle(
+			{right, bottom, backward},
+			{left, bottom, backward},
+			{right, top, backward}
+		));
 	}
 
-	return min;
-}
+	x_offset = x;
+	y_offset = y;
+	z_offset = z + 1;
 
-PIXEL max(const IMAGE_3D& image3d)
-{
-	PIXEL max = numeric_limits<PIXEL>::min();
-
-	for (const IMAGE_2D& image2d : image3d)
+	if (voxel(image3d, x_offset, y_offset, z_offset, dim_x, dim_y) < seuil)
 	{
-		auto current_max = max_element(image2d.begin(), image2d.end());
+		// Triangle 1
 		
-		if (*current_max > max)
-			max = *current_max;
+		triangles.push_back(Triangle(
+			{left, top, forward},
+			{right, top, forward},
+			{left, bottom, forward}
+		));
+		
+		// Triangle 2
+		
+		triangles.push_back(Triangle(
+			{right, bottom, forward},
+			{left, bottom, forward},
+			{right, top, forward}
+		));
 	}
 
-	return max;
+	x_offset = x;
+	y_offset = y - 1;
+	z_offset = z;
+
+	if (voxel(image3d, x_offset, y_offset, z_offset, dim_x, dim_y) < seuil)
+	{
+		// Triangle 1
+		
+		triangles.push_back(Triangle(
+			{left, top, backward},
+			{right, top, backward},
+			{left, top, forward}
+		));
+
+		// Triangle 2
+		 
+		triangles.push_back(Triangle(
+			{right, top, forward},
+			{left, top, forward},
+			{right, top, backward}
+		));
+	}
+
+	x_offset = x;
+	y_offset = y + 1;
+	z_offset = z;
+
+	if (voxel(image3d, x_offset, y_offset, z_offset, dim_x, dim_y) < seuil)
+	{
+		// Triangle 1
+		
+		triangles.push_back(Triangle(
+			{left, bottom, backward},
+			{right, bottom, backward},
+			{left, bottom, forward}
+		));
+
+		// Triangle 2
+		 
+		triangles.push_back(Triangle(
+			{right, bottom, forward},
+			{left, bottom, forward},
+			{right, bottom, backward}
+		));
+	}
+
+	x_offset = x - 1;
+	y_offset = y;
+	z_offset = z;
+
+	if (voxel(image3d, x_offset, y_offset, z_offset, dim_x, dim_y) < seuil)
+	{
+		// Triangle 1
+		
+		triangles.push_back(Triangle(
+			{left, top, forward},
+			{left, top, backward},
+			{left, bottom, forward}
+		));
+
+		// Triangle 2
+		
+		triangles.push_back(Triangle(
+			{left, bottom, backward},
+			{left, bottom, forward},
+			{left, top, backward}
+		));
+	}
+
+	x_offset = x + 1;
+	y_offset = y;
+	z_offset = z;
+
+	if (voxel(image3d, x_offset, y_offset, z_offset, dim_x, dim_y) < seuil)
+	{
+		// Triangle 1
+		
+		triangles.push_back(Triangle(
+			{right, top, forward},
+			{right, top, backward},
+			{right, bottom, forward}
+		));
+
+		// Triangle 2
+		
+		triangles.push_back(Triangle(
+			{right, bottom, backward},
+			{right, bottom, forward},
+			{right, top, backward}
+		));
+	}
+
+	return std::move(triangles);
 }
 
-// Ecriture d'une image 2D dans un flux de sortie
+// Ecriture des triangles en STL
 
-std::ostream& write(std::ostream& os, const IMAGE_2D& image2d)
+std::ostream& write(std::ostream& os, vector<Triangle>& triangles)
 {
-	for (const PIXEL& p : image2d)
+	for (Triangle& triangle : triangles)
 	{
-		unsigned char bytes[2];
-		memcpy(&p, bytes, sizeof(p)); // on copy le pixel dans bytes pour le mettre sur 2 octets
-		os.write(bytes, sizeof(bytes));
+		os << "facet normal 0 0 0\n";
+		os << "outer loop\n";
+		os << "vertex " << triangle.a.x << " " << triangle.a.y << " " << triangle.a.z << "\n";
+		os << "vertex " << triangle.b.x << " " << triangle.b.y << " " << triangle.b.z << "\n";
+		os << "vertex " << triangle.c.x << " " << triangle.c.y << " " << triangle.c.z << "\n";
+		os << "endloop\n";
+		os << "endfacet\n";
 	}
 
 	return os;
 }
 
-// Ecriture d'une image 3D dans un flux de sortie
-
-std::ostream& write(std::ostream& os, const IMAGE_3D& image3d)
+void iso_surface(const IMAGE_3D& image3d, PIXEL seuil, size_t dim_x, size_t dim_y, size_t dim_z, double size_vox_x, double size_vox_y, double size_vox_z)
 {
-	for (const IMAGE_2D& image2d : image3d)
-		write(os, image2d);
+	cout << "solid image3d\n";
 
-	return os;
+	for (size_t z = 1 ; z < (dim_z - 1) ; ++z)
+	{
+		for (size_t y = 1 ; y < (dim_y - 1) ; ++y)
+		{
+			for (size_t x = 1 ; x < (dim_x - 1) ; ++x)
+			{
+				if (voxel(image3d, x, y, z, dim_x, dim_y) >= seuil)
+				{
+					vector<Triangle> faces;
+
+					faces = neighbors_faces(image3d, seuil, x, y, z, size_vox_x, size_vox_y, size_vox_z, dim_x, dim_y);
+					
+					write(cout, faces);
+				}
+			}
+		}
+	}
+	
+	cout << "endsolid image3d\n";
 }
 
 int main(int argc, char** argv)
 {
 	if (argc < 5)
 	{
-		cerr << "Usage : " << argv[0] << " <image_file> <dim_x> <dim_y> <dim_z> <x> <y> <z>\n";
+		cerr << "Usage : " << argv[0] << " <image_file> <dim_x> <dim_y> <dim_z> <size_vox_x> <size_vox_y> <size_vox_z> <seuil>\n";
 		exit(EXIT_FAILURE);
 	}
 
@@ -145,37 +336,31 @@ int main(int argc, char** argv)
 	int dim_y = atoi(argv[3]);
 	int dim_z = atoi(argv[4]);
 
-	int x = 0;
-	int y = 0;
-	int z = 0;
-	
-	if (argc > 7)
-	{
-		x = atoi(argv[5]);
-		y = atoi(argv[6]);
-		z = atoi(argv[7]);
-	}
+	double size_vox_x = atof(argv[5]);
+	double size_vox_y = atof(argv[6]);
+	double size_vox_z = atof(argv[7]);
+
+	int seuil = atoi(argv[8]);
 
 	IMAGE_3D image3d;
 
+	cerr << "image_file : " << argv[1] << "\n";
+	cerr << "dim_x : " << dim_x << "\n";
+	cerr << "dim_y : " << dim_y << "\n";
+	cerr << "dim_z : " << dim_z << "\n";
+	cerr << "size_vox_x : " << size_vox_x << "\n";
+	cerr << "size_vox_y : " << size_vox_y << "\n";
+	cerr << "size_vox_z : " << size_vox_z << "\n";
+	cerr << "seuil : " << seuil << "\n\n";
+
+	cerr << "lecture de l'image 3D...\n";
+
 	read(image_file, image3d, dim_x, dim_y, dim_z);
 
-	// Test de l'image
+	cerr << "Creation de l'iso_surface...\n";
 
-	cout << "min : " << min(image3d) << "\n";
-	cout << "max : " << max(image3d) << "\n";
-
-	if (argc > 7)
-		cout << voxel(image3d, x, y, z, dim_x, dim_y) << "\n";
-
-	// Ecriture de l'image dans la sortie standard
-
-	write(cout, image3d[z]);
+	iso_surface(image3d, seuil, dim_x, dim_y, dim_z, size_vox_x, size_vox_y, size_vox_z);
 
 	return 0;
 }
 ```
-
-## Affichage en Volume
-
-Je n'ai pas eu le temps de réaliser cette exercice.

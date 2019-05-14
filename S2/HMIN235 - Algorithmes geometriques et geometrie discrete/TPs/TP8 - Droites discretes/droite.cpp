@@ -138,6 +138,29 @@ void to_lower(string& str)
 	for (char& c : str)
 		c = std::tolower(c);
 }
+// Dessine un ligne du point (x1, y1) jusqu'au point (x2, y2)
+void draw_line(ImagePGM& image, int x1, int y1, int x2, int y2, int intensity = 255)
+{
+	int xdiff = std::max(x1, x2) - std::min(x1, x2);
+	int ydiff = std::max(y1, y2) - std::min(y1, y2);
+	int xdir = x1 <= x2 ? 1 : -1;
+	int ydir = y1 <= y2 ? 1 : -1;
+
+	int r = std::max(xdiff, ydiff);
+
+	for (int i = 0; i < r + 1; ++i)
+	{
+		int x = x1;
+		int y = y1;
+
+		if (ydiff)
+			y += (float(i) * ydiff) / r * ydir;
+		if (xdiff)
+			x += (float(i) * xdiff) / r * xdir;
+
+		image(y, x) = intensity;
+	}
+}
 
 int main(int argc, char const *argv[])
 {

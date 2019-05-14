@@ -1,13 +1,11 @@
- HMIN211 - Analyse et traitement des images
-
-## Sommaire [↺](#sommaire-)
+## Sommaire
 
 <!-- MarkdownTOC autolink="true" -->
 
-- [Informations ↺](#informations-%E2%86%BA)
-	- [Examens ↺](#examens-%E2%86%BA)
-	- [Ressources ↺](#ressources-%E2%86%BA)
-- [Analyse d'une image ↺](#analyse-dune-image-%E2%86%BA)
+- [Informations](#informations)
+	- [Examens](#examens)
+	- [Ressources](#ressources)
+- [Analyse d'une image](#analyse-dune-image)
 	- [Representation mathématiques des images](#representation-math%C3%A9matiques-des-images)
 	- [Distance entre deux pixels](#distance-entre-deux-pixels)
 	- [Connexité](#connexit%C3%A9)
@@ -39,13 +37,38 @@
 		- [3) Filtre de renforcement](#3-filtre-de-renforcement)
 		- [4) Filtre pass haut](#4-filtre-pass-haut)
 	- [Projet](#projet)
-- [Visualisation volumique](#visualisation-volumique)
+- [Mémo](#m%C3%A9mo)
+- [Seuillage](#seuillage)
+- [Histogramme](#histogramme)
+- [Etirement d'histogramme](#etirement-dhistogramme)
+- [Egalisation d'histogramme](#egalisation-dhistogramme)
+- [Specification d'histogramme](#specification-dhistogramme)
+- [Opérations morphologiques](#op%C3%A9rations-morphologiques)
+	- [Dilatation](#dilatation)
+	- [Erosion](#erosion)
+	- [Fermeture](#fermeture)
+	- [Ouverture](#ouverture)
+- [Convolution](#convolution)
+	- [Application](#application)
+	- [Traitement des bords](#traitement-des-bords)
+- [Courbe ROC](#courbe-roc)
+- [Segmentation](#segmentation)
+	- [Methode de segmentation](#methode-de-segmentation)
+- [Split and merge](#split-and-merge)
+	- [Division](#division)
+	- [Fusion](#fusion)
+- [Inpainting](#inpainting)
+- [Image mosaique](#image-mosaique)
+- [Eigenface](#eigenface)
+- [Detection de points caracteristiques](#detection-de-points-caracteristiques)
+- [Image 3D](#image-3d)
+- [Colorimetrie](#colorimetrie-1)
 
 <!-- /MarkdownTOC -->
 
-## Informations [↺](#sommaire-)
+## Informations
 
-### Examens [↺](#sommaire-)
+### Examens
 
 - **Note final** : 60% Exam + 40% TP
 	- Controle continu
@@ -56,12 +79,12 @@
 		- Question de calcul de distance selon repère (0, 0) en haut à gauche
 		- Nouveauté : Même type d'exam avec en plus feuille mémo recto verso + question sur les presentations des autres
 
-### Ressources [↺](#sommaire-)
+### Ressources
 
 - [Cours puech et TDs-TPs](http://www.lirmm.fr/~wpuech/enseignement/master_informatique/Analyse_Traitement_Image/)
 - [Cours puech et TDs-TPs](http://www.lirmm.fr/~subsol/HMIN211/)
 
-## Analyse d'une image [↺](#sommaire-)
+## Analyse d'une image
 
 - 2 branches différentes en images
 	- Analyse et traitement : à partir de capteurs on recupère les données de l'image
@@ -166,9 +189,9 @@ avant amin aucune valeur n'atteint, après amax, aucune valeur n'atteint amax ce
 
 avec amin à 0 et amax à 255
 
-\(p'(i) = T(p(i)) = α + βp(i)\)
-\(p(i) = a\_{min} → p'(i) = 0\)
-\(p(i) = a\_{max} → p'(i) = 255\)
+$ p'(i) = T(p(i)) = α + βp(i) $
+$ p(i) = a\_{min} → p'(i) = 0 $
+$ p(i) = a\_{max} → p'(i) = 255 $
 
 si on veut rester sur une extension dynamique, il nous faudra supprimer les bruits (pixel avant et après amin) en les mettant à amin amax cepandant cela à pour effet de creer un pic d'intensité sur les valeurs limites
 
@@ -220,24 +243,25 @@ fond de l'image en blanc et objet en noir
 ### Filtrage d'images
 
 #### Pretraitement d'images
- 
+
 ##### Supprimer le bruit
 
 #### Filtre moyenneur
 
-\(h(x, y) = {1 \over t^2}\)
+$ h(x, y) = {1 \over t^2} $
 
 #### Filtre gaussien
 
-\(h(x, y) = { {1 \over 2πθ^2} e^{-{x^2 + y^2 \over 2θ^2}} }\)
+$ h(x, y) = { {1 \over 2πθ^2} e^{-{x^2 + y^2 \over 2θ^2}} } $
 
 avec θ taille de masque h.
 
 #### Filtre exponentiel
 
-\(h(x, y) = {{β \over 4} e^{-β(|x|+|y|)}}\)
+$ h(x, y) = {{β \over 4} e^{-β(|x|+|y|)}} $
 
 **Remarque** : 3 filtres doux
+
 - preserve les couleurs moyennes
 - supprime les hautes fréquences
 
@@ -245,7 +269,7 @@ avec θ taille de masque h.
 
 #### Filtre gaussien 3x3
 
-\(h(m, n) = { {1 \over 16} \begin{bmatrix} 1 & 2 & 1\\ 2 & 4 & 2\\ 1 & 2 & 1 \end{bmatrix} }\)
+$ h(m, n) = { {1 \over 16} \begin{bmatrix} 1 & 2 & 1\\ 2 & 4 & 2\\ 1 & 2 & 1 \end{bmatrix} } $
 
 #### Filtre non linaires
 
@@ -257,9 +281,9 @@ avec θ taille de masque h.
 
 Trier les valeurs des pixels voinsins à p(i, j)
 
-\(p_1(i,j) <= p_2(i, j) <= ... <= p_n(i, j)\)
+$ p_1(i,j) <= p_2(i, j) <= ... <= p_n(i, j) $
 
-\(h(m, n) = { {1 si p_5(i,j)} 0 sinon }\)  
+$ h(m, n) = { {1 si p_5(i,j)} 0 sinon } $  
 
 ### Colorimetrie
 
@@ -315,25 +339,25 @@ Example avec une courbe rampe, en uttilisant
 Image : I(x, y) → gradiant vertical
 
 
-\(I_x(x, y) = { dI(x, y) \over dx }\)
+$ I_x(x, y) = { dI(x, y) \over dx } $
 
-\(I_y(x, y) = { dI(x, y) \over dy }\)
+$ I_y(x, y) = { dI(x, y) \over dy } $
 
 **Module du gradiant**
 
-\(G = \sqrt{ I_x^2 + I_y^2 } = max(I_x, I_y)\)
+$ G = \sqrt{ I_x^2 + I_y^2 } = max(I_x, I_y) $
 
 **Phase du gradiant**
 
-\(ϕ = \arctan{I_y \over I_x}\)
+$ ϕ = \arctan{I_y \over I_x} $
 
 **Discretisation**
 
-\({ dI(x, y) \over dx } = { δI[i, j] \over δj } = I_j[i, j] = I[i, j+1] - I[i, j]\)
+$ { dI(x, y) \over dx } = { δI[i, j] \over δj } = I_j[i, j] = I[i, j+1] - I[i, j] $
 
-\({ dI(x, y) \over dy } = I_i[i, j] = I[i+1, j] - I[i, j]\)
+$ { dI(x, y) \over dy } = I_i[i, j] = I[i+1, j] - I[i, j] $
 
-\(G = \sqrt{I_i[i, j]^2 + I_j[i, j]^2}\)
+$ G = \sqrt{I_i[i, j]^2 + I_j[i, j]^2} $
 
 #### 3) Utilisation du gradient
 
@@ -369,7 +393,7 @@ dérivé seconde → valeur du point d'inflexion
 
 ### a) Laplacien sous forme discrète
 
-\(\begin{bmatrix} 0 & -1 & 0\\ -1 & 4 & -1\\ 0 & -1 & 0 \end{bmatrix}\)
+$ \begin{bmatrix} 0 & -1 & 0\\ -1 & 4 & -1\\ 0 & -1 & 0 \end{bmatrix} $
 
 **Utilisation** :
 
@@ -385,43 +409,43 @@ dérivé seconde → valeur du point d'inflexion
 
 #### 1) Filtre de dérivation double passe (Sobel, hewit)
 
-\(I_j[i,j] = h_j[i,j] * I[i,j]\)
+$ I_j[i,j] = h_j[i,j] * I[i,j] $
 
-\(I_i[i,j] = h_i[i,j] * I[i,j]\)
+$ I_i[i,j] = h_i[i,j] * I[i,j] $
 
-\(h_j = { \begin{bmatrix} 1 & 0 & -1\\ C & 0 & -C\\ 1 & 0 & -1 \end{bmatrix} }\)
+$ h_j = { \begin{bmatrix} 1 & 0 & -1\\ C & 0 & -C\\ 1 & 0 & -1 \end{bmatrix} } $
 
-\(h_i = { \begin{bmatrix} 1 & C & 1\\ 0 & 0 & 0\\ -1 & -C & -1 \end{bmatrix} }\)
+$ h_i = { \begin{bmatrix} 1 & C & 1\\ 0 & 0 & 0\\ -1 & -C & -1 \end{bmatrix} } $
 
 si C = 1 filtre de sobel, si c = 2 filtre de hewit
 
 #### 2) Approximation du gradient
 
-\(\begin{bmatrix} -1 & 1 \end{bmatrix}\) \(\begin{bmatrix} -1 & 2 & -1 \end{bmatrix}\) \(\begin{bmatrix} -1 & 0 & 1 \end{bmatrix}\)
+$ \begin{bmatrix} -1 & 1 \end{bmatrix} $ $ \begin{bmatrix} -1 & 2 & -1 \end{bmatrix} $ $ \begin{bmatrix} -1 & 0 & 1 \end{bmatrix} $
 
-\(\begin{bmatrix} -1 \\ 1 \end{bmatrix}\) \(\begin{bmatrix} -1 \\ 2 \\ -1 \end{bmatrix}\) \(\begin{bmatrix} -1 \\ 0 \\ 1 \end{bmatrix}\)
+$ \begin{bmatrix} -1 \\ 1 \end{bmatrix} $ $ \begin{bmatrix} -1 \\ 2 \\ -1 \end{bmatrix} $ $ \begin{bmatrix} -1 \\ 0 \\ 1 \end{bmatrix} $
 
-\(\begin{bmatrix} 0 & 1 & 0\\ 1 & 0 & -1\\ 0 & -1 & 0 \end{bmatrix}\)
+$ \begin{bmatrix} 0 & 1 & 0\\ 1 & 0 & -1\\ 0 & -1 & 0 \end{bmatrix} $
 
 #### 3) Filtre de renforcement
 
 FPB : ∑ coefs = 1 
 
-\(\begin{bmatrix} 0 & -1 & 0\\ -1 & 5 & -1\\ 0 & -1 & 0 \end{bmatrix}\)
+$ \begin{bmatrix} 0 & -1 & 0\\ -1 & 5 & -1\\ 0 & -1 & 0 \end{bmatrix} $
 
 #### 4) Filtre pass haut
 
 FPH : ∑ coefs = 0 
 
-\(\begin{bmatrix} -1 & -1 & -1\\ -1 & 8 & -1\\ -1 & -1 & -1 \end{bmatrix}\)
+$ \begin{bmatrix} -1 & -1 & -1\\ -1 & 8 & -1\\ -1 & -1 & -1 \end{bmatrix} $
 
 ecart type → 0
 
-\(p(x) = { { 1 \over \sqrt{2π}θ } e^{- (x-m)^2 \over 2θ^2 } }\)
+$ p(x) = { { 1 \over \sqrt{2π}θ } e^{- (x-m)^2 \over 2θ^2 } } $
 
 m : valeur moyenne → 0
 
-\(p(x) = { { 1 \over \sqrt{2π}θ } e^{- x^2 \over 2θ^2 } }\)
+$ p(x) = { { 1 \over \sqrt{2π}θ } e^{- x^2 \over 2θ^2 } } $
 
 
 ### Projet 
@@ -463,5 +487,182 @@ ne pas ce contenter du sujet donné
 	- tester avec 2 images différentes
 	- puis une multitudes
 
-## Visualisation volumique
+# Mémo
 
+## Seuillage
+
+Transforme une image en niveaux de gris en image binaire (Blanc/Noir), pour cela on compare chaque pixel à une seuil prédéfinie, si l'intensité du pixel est inférieur au seuil on met l'intensité du pixel à la valeur minimal (Noir) sinon on met la valeur du pixel à la valeur maximal (Blanc).
+
+- Peux servir à detecter les différents objets dans une image
+- On peut le determiné automatiquement selon plusieurs methode (moyenne, pics dans l'histogramme etc...)
+
+## Histogramme
+
+Outils pratique d'analyse d'image, compte les occurences de chaques intensité des pixels.
+
+- Les pics de l'histogramme correspondent souvent à des objets de l'images
+
+## Etirement d'histogramme
+
+Dans le cas ou une image est trop sombre ou trop claire avec beaucoup d'intensité nulles, la normalisation de l'image permet de mieux repartir les couleurs de l'image on obtient ainsi un histogramme étiré de l'image.
+
+- Methode
+	- Calcul du **min** et **max** de l'intensité d'une image
+	- $Norm(i, j) = (image(i, j) - min) × 255 / (max - min)$ (simple produit en croix)
+
+## Egalisation d'histogramme
+
+Dans le cas ou une image est trop sombre ou trop claire même avec un étirement d'histogramme la cause  provient d'une répartition des pixels non uniforme, l'egalisation nous permettra de mieux répartir les couleurs dans l'image.
+
+- Méthode
+	- Calcul de la répartition des pixels de l'image
+	- $Egal(i, j) = repartition[Egal(i, j)] × 255$
+
+## Specification d'histogramme
+
+La spécification d'histogramme permet de generer une image ayant un forme d'histogramme déterminée (provenant possiblement d'une image de réference), cela peut permettre d'obtenir une bonne répartition des couelurs dans l'image.
+
+- Methode
+	- Calcul de l'egalisation de l'image que l'on veut spécifier
+	- Calcul de l'egalisation inverse de l'image de réference
+	- Transformation de l'image spécifié en utilisant la répartition inverse de l'image de référence
+
+## Opérations morphologiques
+
+On applique ici les operations morphologiques à des images binaires, on choisis de dire que tous les objets dans une image binaires seront representés par la couleur noire tandis que le fond sera representé par la couleur blanche.
+
+### Dilatation
+
+Elle aura pour effet de dilater/étendre les objets dans l'image binaire, pour cela on parcours chaque pixels de l'image et si on à un pixel noir (objet) tous ses voisins deviennent noir (objet).
+
+### Erosion
+
+Elle aura pour effet d'éroder/réduire les objets dans l'image binaire, pour cela on parcours chaque pixels de l'image et si on à un pixel blanc (fond) tous ses voisins deviennent blanc (fond).
+
+### Fermeture
+
+Elle aura effet de supprimer les pixels blancs (fond) isolés, consolidant ainsi la forme des objets de l'image. pour cela on applique une ou plusieurs **dilatations** d'affilés puis le même nombre d'**erosions** sur l'image.
+
+### Ouverture
+
+Elle aura pour effet de supprimer les pixels noirs (objet) isolés, consolidant ainsi le fond de l'image. pour cela on applique une ou plusieurs **erosions** puis le même nombre de **dilatations** sur l'image.
+
+- Ces opération morphologiques peuvent être pour la detection des contours d'objets dans une image.
+
+## Convolution
+
+Une convolution en traitement d'image est le resultat de l'application d'un filtre (noyau de convolution) à cette image, concretement c'est une matrice que l'on applique à chaque pixels de l'image, le resultat de l'operation sur chaques pixels depends de ses voisins.
+
+### Application
+
+- Detection de contours
+- Effet de flou
+- Amélioration de la netteté
+
+### Traitement des bords
+
+Les pixels des bords doivent être traité avec attention car ceux-ci n'ont pas de voisins
+
+- Extension : on étant les pixels des bords
+- Enroulage : on prend les valeurs des bords opposés
+- Miroir : reflet de l'image par les bords
+- Crop : on ne traite pas les pixels nécessitant les des pixels hors limites l'image resultante est plus petite
+- Kernel Crop : on ajuste la normalisation de la matrice en fonction des pixels inutilisables
+
+## Courbe ROC
+
+La courbe ROC (receiver operating characteristic) permet d'evaluer les performances d'un classificateur binaire : vrai positifs (VP), faux positifs (FP), vrai negatifs (VN), faux negatifs (FN)
+
+- $ X : VP / (VP + FN) $
+- $ Y : 1 - VN / (VN + FP) $
+
+## Segmentation
+
+La segmentation d'image a pour but de grouper des pixels en région, elle peut être utile pour séparer les objets du fond.
+
+### Methode de segmentation
+
+- Régions
+	- Croissance de région
+	- Split and merge
+- Contours (edge based segmentation)
+- Seuillage
+
+## Split and merge
+
+### Division
+
+- Decoupage de l'image en sous-région tant que la variance de la région est plus grande que le seuil ou la taille de la région est trop grande
+- Calcul de la moyenne des intensitées pour chaques régions
+
+### Fusion
+
+- Calcul d'un graphe d'adjacence pour chaque régions
+- Pour chaque sommet du graphe on fusionne les sommets ayant des valeurs suffisamment proches.
+
+## Inpainting
+
+Methodes permettant de reconstruire les parties manquantes/endommagées d'une image. Cette methode demande au préalable d'entourer à la main la zone a reconstruire.
+
+- Moyenne des pixels voisins
+- Dilatation pixels par pixels sur les contours de l'objet
+- Analyse est diffusion de la texture des contours de l'objet
+
+## Image mosaique
+
+On decoupe un image en blocks qu'on remplira à l'aide d'une grande base d'image (imagettes) similaire au blocks.
+
+- Disposer d'une grande base d'imagettes
+- Calculer un critère de similitudes (moyenne, variance, etc...) pour chaque blocs de l'image
+- On remplis chaque blocs de l'image avec l'imagette la plus proche selon notre critère
+
+## Eigenface
+
+Technique permettant de reconnaitre un visage
+
+- Calcul du visage moyen à partir d'une grande base de données d'images
+- Calcul des caractèristiques propre du visage par soustraction au visage moyen
+- Calcul de la matrice de covariance du visage propre
+- Calcul des vecteurs propres de la matrice de covariance
+- Projection de l'image a tester dans l'espace des visages propres
+- Différence de l'image propre avec l'image projeté
+- Comparaison selon un seuil de correspondance
+
+## Detection de points caracteristiques
+
+Detection de points caractèristiques dans des images de tels sorte qu'ils soient le plus insensible au transformation d'images tels que la rotation et la mise à l'echelle.
+
+- HARRIS
+- SIFT
+- SURF
+
+## Image 3D
+
+- Superposition d'images 2D
+- Composée de voxels
+- DICOM : Format standard de fichier d'imagerie médicale
+- Tomodensitométrie par rayons X
+	- Défaut : artéfact en étoile dû à des matériaux très denses (alliages dentaires, prothèses...)
+- Imagerie par résonance Magnétique (IRM)
+	- Défaut : décalage chimique lié à des matériaux qui sont proches spatialement
+- Visualisation
+	- Maximum Intensity Projection (MIP) : visualisation des structures denses comme les os
+	- Minimum Intensity Projection (MinIP) : visualisation des structures vides comme les poumons, sinus, etc...
+	- Average Intensity Projection (AIP) : visualisation globale des structures
+- Modélisation
+	- Algorithme du marching cube
+- Stockage
+	- Les données sont souvent stocké en little-endian sur 2 octets
+	- Exemple : $ 1000 = 256 \times 3 + 232 $
+		- Big-endian : 03 E8
+		- Little-endian : E8 03
+
+## Colorimetrie
+
+- Y : $ 0.299 \times R + 0.587 \times G + 0.114 \times B $
+- XYZ
+- YCrCb :
+- YUV : 
+- Lab
+- CMYK
+- HLS (HUE, LUMINOSITY, SATURATION)

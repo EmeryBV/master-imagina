@@ -19,18 +19,12 @@
 
 ### Semestre 3
 
-*5 UE à choisir*
-
 - [HMIN317 - Moteurs de jeux](../../tree/master/S3/HMIN317%20-%20Moteurs%20de%20jeux)
+- [HMIN318 - Imagerie medicale et 3D](../../tree/master/S3/HMIN318%20-%20Imagerie%20medicale%20et%203D)
 - [HMIN319 - Jeux serieux](../../tree/master/S3/HMIN319%20-%20Jeux%20serieux)
-- [HMIN320 - Vision, realite virtuelle et augmentee](../../tree/master/S3/HMIN320%20-%20Vision,%20realite%20virtuelle%20et%20augmentee)
+- [HMIN321 - Societes virtuelles](../../tree/master/S3/HMIN321%20-%20Societes%20virtuelles)
 - [HMIN322 - Codage et compression multimedia](../../tree/master/S3/HMIN322%20-%20Codage%20et%20compression%20multimedia)
 - [HMIN323 - Informatique graphique](../../tree/master/S3/HMIN323%20-%20Informatique%20graphique)
-
-*1 UE à choisir (choix difficile)*
-
-+ [HMIN318 - Imagerie medicale et 3D](../../tree/master/S3/HMIN318%20-%20Imagerie%20medicale%20et%203D)
-+ [HMIN321 - Societes virtuelles](../../tree/master/S3/HMIN321%20-%20Societes%20virtuelles)
 
 ### Semestre 4
 

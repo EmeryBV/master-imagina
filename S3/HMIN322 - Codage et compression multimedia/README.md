@@ -48,7 +48,7 @@
 
 ## Format des images et colorimétrie
 
-Grande diversité d'image $ \Rightarrow $ difficulté à créer un compresseur efficace universel
+Grande diversité d'image <img src="svgs/4fb92cbc0a3b3a976a9903e02e19ad5a.svg?invert_in_darkmode" align=middle width=16.438455pt height=14.15535pt/> difficulté à créer un compresseur efficace universel
 
 ### Codage source
 
@@ -99,33 +99,33 @@ réduction des couleurs d'une image en une palette de couleurs pertinente
 
 ## TP2 - Espace couleur
 
-Image RGB au format N x M $ \rightarrow $ 3 x M x N pixels
+Image RGB au format N x M <img src="svgs/bed3268d80a96d180edd6863c11d1a83.svg?invert_in_darkmode" align=middle width=16.438455pt height=14.15535pt/> 3 x M x N pixels
 
 en sortie on veux 1.5 x M x N pixels (Taux de compression à deux)
 
 ré-échantillonnage en prenant seulement 2 composantes
 
-$ \tau = { tailleImageOriginale \over tailleImageCompressee } $
+<img src="svgs/e9738ed3e60073ce799e230f872936fc.svg?invert_in_darkmode" align=middle width=175.688205pt height=30.64842pt/>
 
 **1) Image compressé :**
 
-$ R = {{M \times N} \over 4} $ avec ré-échantillonnage
+<img src="svgs/ce77ee2972624d3b3a169f890210524c.svg?invert_in_darkmode" align=middle width=72.188325pt height=28.67073pt/> avec ré-échantillonnage
 
-$ G = G $
+<img src="svgs/3bb7a72647a41321f4df3f2c8c4e5560.svg?invert_in_darkmode" align=middle width=47.767005pt height=22.46574pt/>
 
-$ B = {{M \times N} \over 4} $ avec ré-échantillonnage
-
-
-
-$ SNR = {S \over B} $
-
-$ P_{ech}SNR = 20.log_{10} {255^2 \over EQM} $
-
-$ EQM = {1 \over 3MN} \sum (p(i,j) -p'(i,j))^2 $
+<img src="svgs/34debb8c62e9ab367398ce75c00b8919.svg?invert_in_darkmode" align=middle width=72.87324pt height=28.67073pt/> avec ré-échantillonnage
 
 
 
-**2) RGB $ \rightarrow $ YCrCb :**
+<img src="svgs/427be8158fb40c56d48a1f534ad54429.svg?invert_in_darkmode" align=middle width=73.01877pt height=28.67073pt/>
+
+<img src="svgs/e6ff723d461a6a2d0ac60234e48aad39.svg?invert_in_darkmode" align=middle width=184.083405pt height=33.45969pt/>
+
+<img src="svgs/6eef0762e2fca70fbda934973470e0c6.svg?invert_in_darkmode" align=middle width=249.251805pt height=27.77577pt/>
+
+
+
+**2) RGB <img src="svgs/bed3268d80a96d180edd6863c11d1a83.svg?invert_in_darkmode" align=middle width=16.438455pt height=14.15535pt/> YCrCb :**
 
 Même chose en sacrifiant Cr et Cb
 

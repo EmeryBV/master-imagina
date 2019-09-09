@@ -96,15 +96,9 @@ P5
 
 
 
-
-
-
-
-
-
 ## TP1 - Palette
 
-
+réduction des couleurs d'une image en une palette de couleurs pertinente
 
 
 
@@ -116,13 +110,11 @@ en sortie on veux 1.5 x M x N pixels (Taux de compression à deux)
 
 ré-échantillonnage en prenant seulement 2 composantes
 
-$ \tau = { tailleImageOriginale \over tailleImageCompressé} $
+$ \tau = { tailleImageOriginale \over tailleImageCompressée} $
 
 
 
 **1) Image compressé :**
-
-
 
 $ R = {{M \times N} \over 4} $avec ré-échantillonnage
 
@@ -132,21 +124,17 @@ $ B = {{M \times N} \over 4} $ avec ré-échantillonnage
 
 
 
+$ SNR = {S \over B} $
+
 $ P_{ech}SNR = 20.log_{10} {255^2 \over EQM} $
 
-$ EQM = {1 \over 3MN} \sum (p(i, j) -p'(i,j))^2 $
-
-$ SNR = {S \over B} $
+$ EQM = {1 \over 3MN} \sum (p(i,j) -p'(i,j))^2 $
 
 
 
 **2) RGB $ \rightarrow $ YCrCb :**
 
-
-
 Même chose en sacrifiant Cr et Cb
-
-
 
 **Conclusion** : cette compression marche mieux en YcrCb qu'en RGB
 

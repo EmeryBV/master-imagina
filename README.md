@@ -28,13 +28,7 @@
 
 ### Semestre 4
 
-*1 UE à choisir (préférence pour HMIN407)*
-
-- [HMIN406 - Droit et monde de l'entreprise](../../tree/master/S4/HMIN406%20-%20Droit%20et%20monde%20de%20l'entreprise)
 - [HMIN407 - Securite informatique](../../tree/master/S4/HMIN407%20-%20Securite%20informatique)
-
-*1 UE à choisir (préférence pour HMIN408)*
 
 + [HMIN408 - Stage industriel](../../tree/master/S4/HMIN408%20-%20Stage%20industriel)
 
-+ [HMIN409 - Stage academique](../../tree/master/S4/HMIN409%20-%20Stage%20academique)

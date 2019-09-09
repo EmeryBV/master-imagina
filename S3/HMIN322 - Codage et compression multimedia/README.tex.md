@@ -28,7 +28,7 @@
 - Résiste aux transformations
 - Contrainte sur la longueur maximum du message
 - Résiste aux attaques
-- Applicable dans des applications en temps réel 
+- Applicable dans des applications en temps réel[^1]
 
 ![triangle](README.tex.assets/triangle.svg)
 
@@ -89,7 +89,7 @@ P5
 - **JPEG** : Compression sans perte possible : Codage prédictif
 - **JPEG2000** : JPEGLS
 
-
+![truc](truc.gif)
 
 ## TP1 - Palette
 
@@ -138,4 +138,6 @@ Même chose en sacrifiant Cr et Cb
 ## Compression sans perte
 
 ## Compression avec perte
+
+[^1]: ceci est un triangle de chiffrement
 

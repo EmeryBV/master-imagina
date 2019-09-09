@@ -34,7 +34,7 @@
 
 ## Hachage
 
-- Chiffrement de n'importe qu'elle données en une petite signature de taille fixe
+- Chiffrement de n'importe quelle données en une petite signature de taille fixe
 - À la moindre différence entre les deux donnée la signature deviens totalement différente
 
 ### Caractéristiques d'une image

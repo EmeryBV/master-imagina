@@ -32,6 +32,10 @@
 
 ![triangle](README.tex.assets/triangle.svg)
 
+<img src="README.tex.assets/triangle.svg?invert_in_darkmode" align=middle/>
+
+<img src="README.tex.assets/triangle.svg" align=middle/>
+
 ## Hachage
 
 - Chiffrement de n'importe quelle donnée en une petite signature de taille fixe

@@ -136,7 +136,7 @@ send_changes() {
 			echo ""
 
 			if [ -z "$COMMIT_MSG" ]; then
-				COMMIT_MSG="Mise à jour du $(date)"
+				COMMIT_MSG="Mise à jour du $(date +'%x à %X')"
 			fi
 		fi
 

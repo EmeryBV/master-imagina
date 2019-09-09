@@ -111,7 +111,7 @@ $ \tau = { tailleImageOriginale \over tailleImageCompressée} $
 
 **1) Image compressé :**
 
-$ R = {{M \times N} \over 4} $avec ré-échantillonnage
+$ R = {{M \times N} \over 4} $ avec ré-échantillonnage
 
 $ G = G $
 

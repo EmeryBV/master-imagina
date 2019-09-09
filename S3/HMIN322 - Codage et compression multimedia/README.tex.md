@@ -16,7 +16,7 @@
 
 ## Sécurisation des données
 
-- **Compression** : suppression des en réduisant la taille de l'image
+- **Compression** : suppression des redondances en réduisant la taille de l'image
 
 - **Chiffrement** : suppression des redondances sans réduire la taille de l'image
 

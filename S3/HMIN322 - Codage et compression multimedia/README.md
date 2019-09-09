@@ -25,25 +25,14 @@
 ## Insertion de données cachées
 
 - Invisible
-
 - Résiste aux transformations
-
 - Contrainte sur la longueur maximum du message
-
 - Résiste aux attaques
-
 - Applicable dans des applications en temps réel 
 
-  ![Untitled Diagram.drawio](../../Untitled Diagram.drawio) 
+![chiffrement_triangle](/home/thibault/Cours/Master/chiffrement_triangle.svg)
 
-```mermaid
-graph TD
-    A(Invisibilité : Sténographie) --> B(Robustesse : Watermarking)
-    B --> C(Capacité : IDC)
-    C --> A
-```
-
-### Hachage
+## Hachage
 
 - Chiffrement de n'importe qu'elle données en une petite signature de taille fixe
 - À la moindre différence entre les deux donnée la signature deviens totalement différente

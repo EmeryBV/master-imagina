@@ -28,9 +28,9 @@
 - Résiste aux transformations
 - Contrainte sur la longueur maximum du message
 - Résiste aux attaques
-- Applicable dans des applications en temps réel 
+- Applicable dans des applications en temps réel
 
-![triangle](README.tex.assets/triangle.svg)
+![triange_chiffrement](.README.tex.assets/triange_chiffrement.svg)
 
 ## Hachage
 
@@ -48,7 +48,7 @@
 
 ## Format des images et colorimétrie
 
-Grande diversité d'image <img alt="$ \Rightarrow $" src="svgs/4fb92cbc0a3b3a976a9903e02e19ad5a.svg" align="middle" width="16.438455pt" height="14.15535pt"/> difficulté à créer un compresseur efficace universel
+Grande diversité d'image $ \Rightarrow $ difficulté à créer un compresseur efficace universel
 
 ### Codage source
 
@@ -99,33 +99,33 @@ réduction des couleurs d'une image en une palette de couleurs pertinente
 
 ## TP2 - Espace couleur
 
-Image RGB au format N x M <img alt="$ \rightarrow $" src="svgs/bed3268d80a96d180edd6863c11d1a83.svg" align="middle" width="16.438455pt" height="14.15535pt"/> 3 x M x N pixels
+Image RGB au format N x M $ \rightarrow $ 3 x M x N pixels
 
 en sortie on veux 1.5 x M x N pixels (Taux de compression à deux)
 
 ré-échantillonnage en prenant seulement 2 composantes
 
-<img alt="$ \tau = { tailleImageOriginale \over tailleImageCompressee } $" src="svgs/e9738ed3e60073ce799e230f872936fc.svg" align="middle" width="175.688205pt" height="30.64842pt"/>
+$ \tau = { tailleImageOriginale \over tailleImageCompressee } $
 
 **1) Image compressé :**
 
-<img alt="$ R = {{M \times N} \over 4} $" src="svgs/ce77ee2972624d3b3a169f890210524c.svg" align="middle" width="72.188325pt" height="28.67073pt"/> avec ré-échantillonnage
+$ R = {{M \times N} \over 4} $ avec ré-échantillonnage
 
-<img alt="$ G = G $" src="svgs/3bb7a72647a41321f4df3f2c8c4e5560.svg" align="middle" width="47.767005pt" height="22.46574pt"/>
+$ G = G $
 
-<img alt="$ B = {{M \times N} \over 4} $" src="svgs/34debb8c62e9ab367398ce75c00b8919.svg" align="middle" width="72.87324pt" height="28.67073pt"/> avec ré-échantillonnage
-
-
-
-<img alt="$ SNR = {S \over B} $" src="svgs/427be8158fb40c56d48a1f534ad54429.svg" align="middle" width="73.01877pt" height="28.67073pt"/>
-
-<img alt="$ P_{ech}SNR = 20.log_{10} {255^2 \over EQM} $" src="svgs/e6ff723d461a6a2d0ac60234e48aad39.svg" align="middle" width="184.083405pt" height="33.45969pt"/>
-
-<img alt="$ EQM = {1 \over 3MN} \sum (p(i,j) -p'(i,j))^2 $" src="svgs/6eef0762e2fca70fbda934973470e0c6.svg" align="middle" width="249.251805pt" height="27.77577pt"/>
+$ B = {{M \times N} \over 4} $ avec ré-échantillonnage
 
 
 
-**2) RGB <img alt="$ \rightarrow $" src="svgs/bed3268d80a96d180edd6863c11d1a83.svg" align="middle" width="16.438455pt" height="14.15535pt"/> YCrCb :**
+$ SNR = {S \over B} $
+
+$ P_{ech}SNR = 20.log_{10} {255^2 \over EQM} $
+
+$ EQM = {1 \over 3MN} \sum (p(i,j) -p'(i,j))^2 $
+
+
+
+**2) RGB $ \rightarrow $ YCrCb :**
 
 Même chose en sacrifiant Cr et Cb
 

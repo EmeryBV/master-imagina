@@ -12,6 +12,12 @@
 
 #define EPSILON  1e-3
 
+// Converti un vec4 en vec3
+vec3 Vec3(vec4 v);
+
+// Converti un vec3 en vec4
+vec4 Vec4(vec3 v);
+
 class Object{
 public:
   

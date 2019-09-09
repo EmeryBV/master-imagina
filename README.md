@@ -27,21 +27,20 @@
 - [HMIN322 - Codage et compression multimedia](../../tree/master/S3/HMIN322%20-%20Codage%20et%20compression%20multimedia)
 - [HMIN323 - Informatique graphique](../../tree/master/S3/HMIN323%20-%20Informatique%20graphique)
 
-*1 UE à choisir*
+*1 UE à choisir (choix difficile)*
 
-+ [HMIN303 - Developpement logiciel pour l'embarque](../../tree/master/S3/HMIN303%20-%20Developpement%20logiciel%20pour%20l'embarque)
++ [HMIN318 - Imagerie medicale et 3D](../../tree/master/S3/HMIN318%20-%20Imagerie%20medicale%20et%203D)
++ [HMIN321 - Societes virtuelles](../../tree/master/S3/HMIN321%20-%20Societes%20virtuelles)
 
 ### Semestre 4
 
-*UE obligatoire*
+*1 UE à choisir (préférence pour HMIN407)*
 
-- [HMIN402 - Enjeux juridiques et déontologiques de l'informatique](../../tree/master/S4/HMIN402%20-%20Enjeux%20juridiques%20et%20déontologiques%20de%20l'informatique)
+- [HMIN406 - Droit et monde de l'entreprise](../../tree/master/S4/HMIN406%20-%20Droit%20et%20monde%20de%20l'entreprise)
+- [HMIN407 - Securite informatique](../../tree/master/S4/HMIN407%20-%20Securite%20informatique)
 
-*UE à choisir*
+*1 UE à choisir (préférence pour HMIN408)*
 
-+ [HMIN403 - Stage industriel](../../tree/master/S4/HMIN403%20-%20Stage%20industriel)
++ [HMIN408 - Stage industriel](../../tree/master/S4/HMIN408%20-%20Stage%20industriel)
 
-*ou*
-
-+ [HMIN401 - Etude bibliographique](../../tree/master/S4/HMIN401%20-%20Etude%20bibliographique)
-+ [HMIN401 - Stage academique](../../tree/master/S4/HMIN401%20-%20Stage%20academique)
++ [HMIN409 - Stage academique](../../tree/master/S4/HMIN409%20-%20Stage%20academique)

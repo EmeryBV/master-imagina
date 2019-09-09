@@ -9,37 +9,89 @@
 #include "common.h"
 
 
+vec3 Vec3(vec4 v) {
+  return vec3(v.x,v.y,v.z);
+}
+
+vec4 Vec4(vec3 v) {
+  return vec4(v.x,v.y,v.z,0);
+}
 
 /* -------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------- */
 Object::IntersectionValues Sphere::intersect(vec4 p0_w, vec4 V_w){
   IntersectionValues result;
+  result.name = this->name;
 
   //TODO: Ray-sphere setup
-      
-  result.t_o = raySphereIntersection(INVC * p0_w, INVC * V_w);
-  result.name = this->name;
+  
+  // p0_w.w = 0;
+
+  vec4 rayOrigin_o    = INVC * p0_w; 
+  vec4 rayDir_o       = INVC * V_w;
+  vec4 sphereCenter_o = vec4(0.0, 0.0, 0.0, 0.0);
+
+  result.t_o = raySphereIntersection(rayOrigin_o, rayDir_o);
+  rayOrigin_o.w = 0;
+
+  result.P_o = rayOrigin_o + result.t_o * rayDir_o;
+  result.N_o = result.P_o - sphereCenter_o;
+
+  result.t_w = result.t_o;
+  result.P_w = p0_w + result.t_w * V_w;
+  result.N_w = C * result.N_o;
+
+  /*
+  static bool test = true;
+
+  if (test) {
+    std::cerr << this->name << "\n";
+    std::cerr << "p0_w            : " << p0_w << "\n";
+    std::cerr << "p0_w * C        : " << C * p0_w << "\n";
+    std::cerr << "p0_w * INVC     : " << INVC * p0_w << "\n";
+    std::cerr << "p0_w * INVCStar : " << INVCStar * p0_w << "\n";
+    std::cerr << "V_w             : " << V_w << "\n";
+    std::cerr << "V_w * C         : " << C * V_w << "\n";
+    std::cerr << "V_w * INVC      : " << INVC * V_w << "\n";
+    std::cerr << "V_w * INVCStar  : " << INVCStar * V_w << "\n";
+    std::cerr << "length(V_w)         : " << length(V_w) << "\n";
+    std::cerr << "length(V_w * INVC)  : " << length(INVC * V_w) << "\n";
+    test = true;
+  } else {
+    test = false;
+  } 
+
+  */
 
   return result;
 }
 
+
+
 /* -------------------------------------------------------------------------- */
 /* ------ Ray = p0 + t*V  sphere at origin O and radius r    : Find t ------- */
 double Sphere::raySphereIntersection(vec4 p0, vec4 V, vec4 O, double r){
-  double t  = std::numeric_limits< double >::infinity();
+  double t = std::numeric_limits< double >::infinity();
   
   //TODO: Ray-sphere intersection;
   
-  vec4 toP0 = (p0 - O);
+  vec3 rayOrigin = Vec3(p0);
+  vec3 rayDir = normalize(Vec3(V));
+  vec3 centerToRay = Vec3(p0 - O);
 
-  double a = dot(V, V);
-  double b = 2 * dot(toP0, V);
-  double c = dot(toP0, toP0) - (r * r);
-
+/*
+  vec4 rayOrigin = p0;
+  vec4 rayDir = normalize(V);
+  vec4 centerToRay = p0 - O;
+*/
+  double a = dot(rayDir, rayDir);
+  double b = 2 * dot(centerToRay, rayDir);
+  double c = dot(centerToRay, centerToRay) - (r * r);
   double discriminant = (b * b) - 4 * a * c;
 
-  if (discriminant > 0)
-    t = (-b - sqrt(discriminant)) / 2.0 * a;
+  if (discriminant > EPSILON){
+    t = (-b - sqrt(discriminant)) / (2.0 * length(V) * a);
+  }
 
   return t;
 }
@@ -48,89 +100,80 @@ double Sphere::raySphereIntersection(vec4 p0, vec4 V, vec4 O, double r){
 /* -------------------------------------------------------------------------- */
 Object::IntersectionValues Square::intersect(vec4 p0_w, vec4 V_w){
   IntersectionValues result;
-  
-  //TODO: Ray-square setup
-  // result.N_w = TRAINC * result.N_o;
-  // result.N_w = TRAINC * result.N_o;
-  
-
-  result.t_o = raySquareIntersection(INVC * p0_w, INVC * V_w);
   result.name = this->name;
-/*
-  result.ID_ = -1;
-  vec4 pointO = this->INVC * p0_w;
-  vec4 VO = this->INVC * V_w;
-  bool inverse = false;
-  double t = raySquareIntersection(pointO, VO);
-  
-  if (t > EPSILON)
-  { //TODO: Ray-square setup 
-  	
-  	//pour eviter les clippings et positif si ca touche
-  	vec4 pointW = p0_w + t*V_w;
-	vec4 pointReflectO = this->INVC * pointW; //il faut verifier si c est dans le carre et pas en dehors
-	
-	if(pointReflectO.x>=mesh.vertices[0].x && pointReflectO.x<=mesh.vertices[1].x && pointReflectO.y>=mesh.vertices[0].y && pointReflectO.y<=mesh.vertices[1].y)
-	{
-		vec4 normale = mesh.normals[0];
-		
-		if(inverse)
-		{
-			normale = -mesh.normals[0];
-		}
 
-		result.P_o = pointReflectO;
-		result.P_w = pointW; //normales ?
-		result.N_o = normale;
-		result.N_w = this->C;
-    	result.t_w = t; //t wormld et t object ???
-    	result.t_o = t;
-    	result.name = this->name;
-    	result.ID_ = 0;
-    }
-  }
+  //TODO: Ray-square setup
+  
+  vec4 rayOrigin_o = INVC * p0_w;
+  vec4 rayDir_o    = INVC * V_w;
+
+  vec4 planeNormal_o = mesh.normals[0]; planeNormal_o.w = 0;
+
+  result.t_o = raySquareIntersection(rayOrigin_o, rayDir_o);
+  result.P_o = rayOrigin_o + result.t_o * rayDir_o;
+  result.N_o = planeNormal_o;
+
+  result.t_w = result.t_o;
+  result.P_w = p0_w + result.t_w * V_w;
+  result.N_w = C * result.N_o;
+
+/*
+
+  static bool test = true;
+
+  if (test) {
+    std::cerr << this->name << "\n";
+    std::cerr << "p0_w            : " << p0_w << "\n";
+    std::cerr << "p0_w * C        : " << C * p0_w << "\n";
+    std::cerr << "p0_w * INVC     : " << INVC * p0_w << "\n";
+    std::cerr << "p0_w * INVCStar : " << INVCStar * p0_w << "\n";
+    std::cerr << "V_w             : " << V_w << "\n";
+    std::cerr << "V_w * C         : " << C * V_w << "\n";
+    std::cerr << "V_w * INVC      : " << INVC * V_w << "\n";
+    std::cerr << "V_w * INVCStar  : " << INVCStar * V_w << "\n";
+    std::cerr << "length(V_w)         : " << length(V_w) << "\n";
+    std::cerr << "length(V_w * INVC)  : " << length(INVC * V_w) << "\n";
+    test = true;
+  } else {
+    test = false;
+  } 
 */
   return result;
 }
 
+
 /* -------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------- */
 double Square::raySquareIntersection(vec4 p0, vec4 V){
-  double t   = std::numeric_limits< double >::infinity();
-  
-  //TODO: Ray-square intersection;
+  double t = std::numeric_limits< double >::infinity();
 
-  vec4 a = mesh.vertices[5]; // up left
-  vec4 b = mesh.vertices[1]; // up right
-  vec4 c = mesh.vertices[2]; // down right
-  vec4 d = mesh.vertices[0]; // down left
+  vec3 a = Vec3(mesh.vertices[5]); //a.w = 0;// up left
+  vec3 b = Vec3(mesh.vertices[1]); //b.w = 0;// up right
+  vec3 c = Vec3(mesh.vertices[2]); //c.w = 0;// down right
 
-  vec4 plane_normal = normalize(cross(a - b, a - c)); 
-  vec4 line_dir = normalize(V);
+  vec3 rayOrigin = Vec3(p0);
+  vec3 rayDir = Vec3(V);
 
-  vec4 toA = a - p0;
+  vec3 planeNormal = cross(b - a, c - a); 
 
-  vec4 proj = dot(toA, V);
+  vec3 originToA = a - rayOrigin;
 
-  float denom = dot(plane_normal, line_dir);
+  float denom = dot(planeNormal, rayDir);
 
-  if (denom > 1e-6)
+  if (denom > EPSILON)
   {
-    vec4 p0_to_a = a - p0;
-    t = dot(p0_to_a, plane_normal) / denom;
+    t = dot(originToA, planeNormal) / denom;
 
-    if (t > 1e-6)
+    if (t > EPSILON)
     {
-      vec4 proj_on_plane = p0 + line_dir * t;
+      vec3 projOnPlane = rayOrigin + rayDir * t;
       
-      if (proj_on_plane.x < 1 && proj_on_plane.x > -1 && proj_on_plane.y < 1 && proj_on_plane.y > -1)
+      if (projOnPlane.x < 1 && projOnPlane.x > -1 && projOnPlane.y < 1 && projOnPlane.y > -1)
       {
         return t;
       }
     }
-
-    return INFINITY; // plane intersection quand t >= 0
   }
 
-  return INFINITY;
+  return std::numeric_limits< double >::infinity();
 }

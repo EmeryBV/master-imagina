@@ -112,57 +112,51 @@ toute application linéaire à une représenation par une matrice
 
 ### Notion de distance
 
-\(d_2(x, y) = \sqrt{ (x_2 - x_1)² + (y_2 - y_1)² }\)
+$d_2(x, y) = \sqrt{ (x_2 - x_1)² + (y_2 - y_1)² }$
 
 #### Axiome des distances
 
-1. Positive \(∀ p, q ∈ E, d(p, q) ≥ 0\)\)
-2. Definie \(∀ p, q ∈ E, d'p, q) = 0 ⇔ p = q\)
-3. Symétrique \(∀ p, q ∈ E, d(p, q) = d(q, p)\)
-4. Triangulaire \(∀ p, q ∈ E, d(p, q) ≤ d(p, r) + d(r, q)\)
+1. Positive $∀ p, q ∈ E, d(p, q) ≥ 0$
+2. Definie $∀ p, q ∈ E, d(p, q) = 0 ⇔ p = q$
+3. Symétrique $∀ p, q ∈ E, d(p, q) = d(q, p)$
+4. Triangulaire $∀ p, q ∈ E, d(p, q) ≤ d(p, r) + d(r, q)$
 
 #### Distance Hausdorff
 
-\(d(p, X) = min(d(p, q) : q ∈ X))\)
+$d(p, X) = min(d(p, q) : q ∈ X))$
 
-\(Hd(X, Y) = max(max(d(p, Y) : p ∈ X), max(d(p, X) : p ∈ Y))\)
+$Hd(X, Y) = max(max(d(p, Y) : p ∈ X), max(d(p, X) : p ∈ Y))$
 
 #### Norme
 
-1. Positive : \(∀ x ∈ E, g(x) ≥ 0\)\)
-2. Definie : \(∀ x ∈ E, g(x) = 0 ⇔ x = q\)
-3. Triangulaire : \(∀ x, y ∈ E, g(x, y) ≤ g(x) + g(y)\)
-4. Homogene : \(∀ x ∈ E, λ ∈ K, g(λ.x) = |λ|.g(x)\)
-5. Invariance par translation : \(∀ p, q, r ∈ E d(p + r, q + r) = d(p, q)\)
-6. Homogénéité : \(∀ p, q ∈ E, λ ∈ k d(λ.p, λq) = |λ|.d(p, q)\)
+1. Positive : $∀ x ∈ E, g(x) ≥ 0$
+2. Definie : $∀ x ∈ E, g(x) = 0 ⇔ x = q$
+3. Triangulaire : $∀ x, y ∈ E, g(x, y) ≤ g(x) + g(y)$
+4. Homogene : $∀ x ∈ E, λ ∈ K, g(λ.x) = |λ|.g(x)$
+5. Invariance par translation : $∀ p, q, r ∈ E d(p + r, q + r) = d(p, q)$
+6. Homogénéité : $∀ p, q ∈ E, λ ∈ k d(λ.p, λq) = |λ|.d(p, q)$
 
-Soit \(g : E → F\) une norme sur K
+Soit $g : E → F$ une norme sur K
 
-Alors l'application \(D : E × E → F\)
+Alors l'application $D : E × E → F$
 
-\((p, q) ↦ g(q - p)\)  est une distance
+$(p, q) ↦ g(q - p)$  est une distance
 
 ### [TD - Les masques de Chamfrein](TDs/TD%20-%20Distance%20de%20Chamfrein.pdf)
 
 #### Exercice 1
 
 1. Distance de Manhattan
-2. Distance de l'échiquier 2^2
+2. Distance de l'échiquier $2^2$
 3. 
 
 #### Exercice 2
 
 1. L'inegalité triangulaire est la propriété qui nous permet cela
 
-2. \(\begin{vmatrix}2 & 1 & 2\\1 & 0 & 1\\2 & 1 & 4\end{vmatrix}\) et \(\begin{vmatrix}14 & 11 & 10 & 11 & 14\\11 & 7 & 5 & 7 & 11\\10 & 5 & 0 & 5 & 10\\11 & 7 & 5 & 7 & 11\\14 & 11 & 10 & 11 & 14\end{vmatrix}\)
+2. $\begin{vmatrix}2 & 1 & 2\\1 & 0 & 1\\2 & 1 & 4\end{vmatrix}$ et $\begin{vmatrix}14 & 11 & 10 & 11 & 14\\11 & 7 & 5 & 7 & 11\\10 & 5 & 0 & 5 & 10\\11 & 7 & 5 & 7 & 11\\14 & 11 & 10 & 11 & 14\end{vmatrix}$
 
 #### Exercice 3
-
-$$
-\cos(\theta) + bonjour = 2^4
-$$
-
-
 
 
 

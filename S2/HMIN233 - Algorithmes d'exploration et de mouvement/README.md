@@ -261,32 +261,32 @@ X ⊆ Y ⟹ cover(Y) ⊆ cover(X)
 
 **2)**
 
-- \(cover(ACD)  = { t3 }\)
-- \(cover(CE)   = { t2, t6, t9 }\)
-- \(cover(BCE)  = { t2 }\)
-- \(cover(ABCE) = { t2 }\)
-- \(cover(E)    = { t2, t4, t6, t7, t9 }\)
-- \(cover(D)    = { t1, t3, t4, t8 }\)
-- \(cover(BC)   = { t1, t2, t3 }\)
-- \(cover(F)    = { t3, t6, t7, t8, t10 }\)
-- \(cover(CDF)  = { t3 }\)
-- \(cover(EF)   = { t6, t7 }\)
+- $cover(ACD)  = { t3 }$
+- $cover(CE)   = { t2, t6, t9 }$
+- $cover(BCE)  = { t2 }$
+- $cover(ABCE) = { t2 }$
+- $cover(E)    = { t2, t4, t6, t7, t9 }$
+- $cover(D)    = { t1, t3, t4, t8 }$
+- $cover(BC)   = { t1, t2, t3 }$
+- $cover(F)    = { t3, t6, t7, t8, t10 }$
+- $cover(CDF)  = { t3 }$
+- $cover(EF)   = { t6, t7 }$
 
 
-- \(freq(ACD)   = 1 (10\%)\)
-- \(freq(CE)    = 3 (30\%)\)
-- \(freq(BCE)   = 1 (10\%)\)
-- \(freq(ABCE)  = 1 (10\%)\)
-- \(freq(E)     = 5 (50\%)\)
-- \(freq(D)     = 4 (40\%)\)
-- \(freq(BC)    = 3 (30\%)\)
-- \(freq(F)     = 5 (50\%)\)
-- \(freq(CDF)   = 1 (10\%)\)
-- \(freq(EF)    = 2 (20\%)\)
+- $freq(ACD)   = 1$ (10%)
+- $freq(CE)    = 3$ (30%)
+- $freq(BCE)   = 1$ (10%)
+- $freq(ABCE)  = 1$ (10%)
+- $freq(E)     = 5$ (50%)
+- $freq(D)     = 4$ (40%)
+- $freq(BC)    = 3$ (30%)
+- $freq(F)     = 5$ (50%)
+- $freq(CDF)   = 1$ (10%)
+- $freq(EF)    = 2$ (20%)
 
 **3)**
 
-- L = { ACD¹, CE³, BCE¹, ABCE¹, E¹, D⁴, BC³, F⁵ }
+- L = { ACD¹, CE³, BCE¹, ABCE¹, E⁵, D⁴, BC³, F⁵ }
 
 **4)**
 
@@ -295,25 +295,25 @@ X ⊆ Y ⟹ cover(Y) ⊆ cover(X)
 
 #### Exercice 2
 
-**1)** \(|Lᵢ| = 2⁶ = 64\)
+**1)** $|Lᵢ| = 2⁶ = 64$
 
 **2)**
 
-- \(X ⊆ Y ⟹ freq(Y) ≤ freq(X)\)
-- \(Soit X ⊆ Y\)
-	- \(∀ Tᵢ ∈ D : Y ⊆ Tᵢ ⟹ X ⊆ Tᵢ\) (transitivité)
-	- \(∀ Tᵢ ∈ D : Tᵢ ∈ cover(Y) ⟹ Tᵢ ∈ cover(X)\) (definition cover)
-	- \((freq(Y) = n ⟹ freq(X) ≥ n) ⟺ freq(Y) ≤ freq(X)\) (CQFD)
+- $X ⊆ Y ⟹ freq(Y) ≤ freq(X)$
+- $Soit X ⊆ Y$
+	- $∀ Tᵢ ∈ D : Y ⊆ Tᵢ ⟹ X ⊆ Tᵢ$ (transitivité)
+	- $∀ Tᵢ ∈ D : Tᵢ ∈ cover(Y) ⟹ Tᵢ ∈ cover(X)$ (definition cover)
+	- $(freq(Y) = n ⟹ freq(X) ≥ n) ⟺ freq(Y) ≤ freq(X)$ (CQFD)
 
 **3)**
 
 - Premisse
-	- \(∀ X, Y ⊆ I : X ⊆ Y ⟹ freq(Y) ≤ freq(X)\)
-	- \(∀ X, Y ⊆ I : X ⊆ Y ⟹ (freq(Y) ≥ θ) ⟹ freq(X) ≥ θ\)
+	- $∀ X, Y ⊆ I : X ⊆ Y ⟹ freq(Y) ≤ freq(X)$
+	- $∀ X, Y ⊆ I : X ⊆ Y ⟹ (freq(Y) ≥ θ) ⟹ freq(X) ≥ θ$
 
 - Construction
-	- \(∀ X, Y ⊆ I : X ⊆ Y ∧ (freq(Y) ≥ θ) ⟹ freq(X) ≥ θ\)
-	- \(∀ X, Y ⊆ I : X ⊆ Y ∧ (θ ≤ freq(Y) ≤ freq(X)) ⟹ freq(X) ≥ θ\)
+	- $∀ X, Y ⊆ I : X ⊆ Y ∧ (freq(Y) ≥ θ) ⟹ freq(X) ≥ θ$
+	- $∀ X, Y ⊆ I : X ⊆ Y ∧ (θ ≤ freq(Y) ≤ freq(X)) ⟹ freq(X) ≥ θ$
 
 #### Exercice 3
 
@@ -336,34 +336,34 @@ Exam frequent / closed / maximal
 
 #### Exercice 1
 
-**1)** \(M_θ\) with \(θ = 1\) for any dataset
+**1)** $M_θ$ with $θ = 1$ for any dataset
 
 reviens à retourner au moins la base plus les autres maximums.
 
-**2)** \(∀θ : F_θ = M_θ\)
+**2)** $∀θ : F_θ = M_θ$
 
-- \(|M_θ| = α |F_θ|\)
-- \(|C_θ| = β |F_θ|\)
-- \(α, β ∈ [0, 1]\)
+- $|M_θ| = α |F_θ|$
+- $|C_θ| = β |F_θ|$
+- $α, β ∈ [0, 1]$
 
 ### Exercice 2
 
 **1)**
 
-- \(M_θ = \{ ABC^3, DE^2, EF^5 \}\)
-- \(C_θ = \{ ABC^3, ABE^5, DE^2, EF^5 \}\)
+- $M_θ = \{ ABC^3, DE^2, EF^5 \}$
+- $C_θ = \{ ABC^3, ABE^5, DE^2, EF^5 \}$
 
 **2)** Il est plus simple d'extraire les clos en premier puis maximum (sous-ensemble de clos) puis fréquents
 
-- \(C_{θ = 3} : \{ BE^5, AC^3, BCE^4, C^5 \}\) 
-- \(M_{θ = 3} : \{ BCE^4, AC^3 \}\)
-- \(F : \{ B^5, C^5, E^5, BC^4, BE^5, BCE^4, CE^4, A^3, AC^3 \}\)
+- $C_{θ = 3} : \{ BE^5, AC^3, BCE^4, C^5 \}$ 
+- $M_{θ = 3} : \{ BCE^4, AC^3 \}$
+- $F : \{ B^5, C^5, E^5, BC^4, BE^5, BCE^4, CE^4, A^3, AC^3 \}$
 
 ### Exercice 3
 
 (A compléter)
 
-### [TD3 - Frequent itemset mining III](TDs/TD3 - Frequent itemset mining III.pdf) 
+### [TD3 - Frequent itemset mining III](TDs/TD3%20-%20Frequent%20itemset%20mining%20III.pdf)
 
 #### Exercice 1
 
@@ -380,12 +380,3 @@ graph TB
 	E --> H("clos(ACE) = ABCE")
 	G --> I("freq(ACDE) = 0")
 ```
-
-
-
-
-
-
-
-
-

@@ -22,6 +22,9 @@ point4 lightPosition;
 color4 lightColor;
 point4 cameraPosition;
 
+std::vector<vec3> draw_points;
+std::vector<vec3> draw_vectors;
+
 //Recursion depth for raytracer
 int maxDepth = 3;
 
@@ -205,7 +208,7 @@ void castRayDebug(vec4 p0, vec4 dir){
       std::cout << "L: " << L << "\n";
     }
   }
-  
+  std::cout << "---------------------------------------------\n";
 }
 
 /* -------------------------------------------------------------------------- */
@@ -222,34 +225,94 @@ bool shadowFeeler(vec4 p0, Object *object){
 /* ----------  return color, right now shading is approx based      --------- */
 /* ----------  depth                                                --------- */
 color4 castRay(vec4 p0, vec4 E, Object *lastHitObject, int depth){
-  color4 color = color4(0.0,0.0,0.0,0.0);
+  color4 color = color4(0.0,0.0,0.0,1.0);
   
   if(depth > maxDepth){
-    return color;
+  	// std::cerr << "CastRay depth END\n";
+    return color; // fin de la récursion
   }
+
+  // std::cerr << "--------------castRay " << depth << "------------------\n";
 
   //TODO: Raytracing code here
 
   Object* closestObject = NULL;
   Object::IntersectionValues values;
+  Object::IntersectionValues closestValues;
   double minDist = std::numeric_limits<double>::infinity();
+  double currentDist = minDist;
+
+  // Trouve l'intersection avec l'objet le plus proche
 
   for (int i = 0; i < sceneObjects.size(); ++i)
   {	
   	values = sceneObjects[i]->intersect(p0, E);
-  	double currentDist = values.t_o;
+  	currentDist = values.t_w;
   	
   	if (currentDist < minDist)
   	{
   		minDist = currentDist;
+  		closestObject = sceneObjects[i];
+  		closestValues = values;
   		color = sceneObjects[i]->shadingValues.color;
   	}
   }
-  
-  // std::cerr << "name, dist : " << values.name << ", " << minDist << "\n";
-  // std::cerr << "color : " << color << "\n";
 
-  return color;
+  if (currentDist == std::numeric_limits<double>::infinity()) {
+  	// std::cerr << "CastRay no intersection END\n";
+  	return color; // aucune intersection
+  }
+
+
+
+  //lastHitObject = closestObject;
+
+  vec3 L = normalize(Vec3(lightPosition - closestValues.P_w)); // vers la lumière
+  vec3 C = normalize(Vec3(cameraPosition - closestValues.P_w)); // vers la caméra
+  vec3 normal = normalize(Vec3(closestValues.N_w));
+  vec3 rayDir = normalize(Vec3(E));
+
+  vec3 rayReflection = reflect(rayDir, normal);
+
+/*
+  for (int i = 0; i < sceneObjects.size(); ++i)
+  {	
+  	if (sceneObjects[i]->intersect(values.P_w, L).t_w < std::numeric_limits<double>::infinity()) {
+  		return color; // point dans l'ombre
+  	}
+  }
+*/
+  //draw_vector(p0, E);
+
+  color4 material_ambient(closestObject->shadingValues.color.x * closestObject->shadingValues.Ka,
+                          closestObject->shadingValues.color.y * closestObject->shadingValues.Ka,
+                          closestObject->shadingValues.color.z * closestObject->shadingValues.Ka, 1.0 );
+
+  color4 material_diffuse(closestObject->shadingValues.color.x * closestObject->shadingValues.Kd,
+                          closestObject->shadingValues.color.y * closestObject->shadingValues.Kd,
+                          closestObject->shadingValues.color.z * closestObject->shadingValues.Kd, 1.0 );
+
+  color4 material_specular(closestObject->shadingValues.color.x * closestObject->shadingValues.Ks,
+                           closestObject->shadingValues.color.y * closestObject->shadingValues.Ks,
+                           closestObject->shadingValues.color.z * closestObject->shadingValues.Ks, 1.0 );
+
+  float material_shininess = closestObject->shadingValues.Kn;
+  
+  color4 ambient_product  = GLState::light_ambient * material_ambient;
+  color4 diffuse_product  = GLState::light_diffuse * material_diffuse * std::max(0.0f, dot(L, normal));
+  color4 specular_product = GLState::light_specular * material_specular * pow(std::max(0.0f, dot(rayReflection, C)), material_shininess);
+
+  color = ambient_product + diffuse_product + specular_product;
+/*
+  std::cerr << "Hit " << closestValues.name << " " << closestValues.ID_ << "\n";
+  std::cerr << "P: " <<  closestValues.P_w << "\n";
+  std::cerr << "N: " <<  closestValues.N_w << "\n";
+  std::cerr << "L: " << L << "\n";
+
+  //std::cerr << "name, dist : " << values.name << ", " << minDist << "\n";
+  //std::cerr << "color : " << color << "\n";
+*/
+  return color;// + castRay(closestValues.P_w, rayReflection, closestObject, depth + 1) ;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -377,7 +440,6 @@ void initCornellBox(){
     sceneObjects[sceneObjects.size()-1]->setModelView(RotateY(180)*Translate(0.0, 0.0, -2.0)*Scale(2.0, 2.0, 1.0));
   }
   
-  
   {
   sceneObjects.push_back(new Sphere("Glass sphere"));
   Object::ShadingValues _shadingValues;
@@ -395,7 +457,7 @@ void initCornellBox(){
   {
   sceneObjects.push_back(new Sphere("Mirrored Sphere"));
   Object::ShadingValues _shadingValues;
-  _shadingValues.color = vec4(1.0,1.0,1.0,1.0);
+  _shadingValues.color = vec4(0.0,1.0,1.0,1.0);
   _shadingValues.Ka = 0.0;
   _shadingValues.Kd = 0.0;
   _shadingValues.Ks = 1.0;
@@ -405,6 +467,7 @@ void initCornellBox(){
   sceneObjects[sceneObjects.size()-1]->setShadingValues(_shadingValues);
   sceneObjects[sceneObjects.size()-1]->setModelView(Translate(-1.0, -1.25, -1.0)*Scale(0.75, 0.75, 0.75));
   }
+  
 }
 
 
@@ -430,13 +493,25 @@ void initUnitSphere(){
 
   _shadingValues.color = vec4(1.0, 0.0 ,0.0 ,1.0);
   sceneObjects[sceneObjects.size()-1]->setShadingValues(_shadingValues);
-  sceneObjects[sceneObjects.size()-1]->setModelView(Translate(1.0, 0.0, -1.0));
-  
+  sceneObjects[sceneObjects.size()-1]->setModelView(Scale(0.5));
+  sceneObjects[sceneObjects.size()-1]->setModelView(Translate(1.0,0,0));
+  }
+
+  {
+  Object::ShadingValues _shadingValues;
+  _shadingValues.Ka = 0.0;
+  _shadingValues.Kd = 1.0;
+  _shadingValues.Ks = 0.0;
+  _shadingValues.Kn = 16.0;
+  _shadingValues.Kt = 0.0;
+  _shadingValues.Kr = 0.0;
+
   sceneObjects.push_back(new Sphere("Diffuse sphere green"));
 
-  _shadingValues.color = vec4(0, 1.0, 0, 1.0);
+  _shadingValues.color = vec4(0.0, 1.0 ,0.0 ,1.0);
   sceneObjects[sceneObjects.size()-1]->setShadingValues(_shadingValues);
-  sceneObjects[sceneObjects.size()-1]->setModelView(Translate(-0.5, 0.0, 0.5));
+  sceneObjects[sceneObjects.size()-1]->setModelView(Scale(0.5));
+  sceneObjects[sceneObjects.size()-1]->setModelView(Translate(-1.0,0,0));
   }
   
 }
@@ -461,7 +536,21 @@ void initUnitSquare(){
     _shadingValues.Kt = 0.0;
     _shadingValues.Kr = 0.0;
     sceneObjects[sceneObjects.size()-1]->setShadingValues(_shadingValues);
-    sceneObjects[sceneObjects.size()-1]->setModelView(mat4());
+    sceneObjects[sceneObjects.size()-1]->setModelView(Scale(0.5));
+  }
+  
+  { //Left Wall
+    sceneObjects.push_back(new Square("Left Wall"));
+    Object::ShadingValues _shadingValues;
+    _shadingValues.color = vec4(1.0,0.0,0.0,1.0);
+    _shadingValues.Ka = 0.0;
+    _shadingValues.Kd = 1.0;
+    _shadingValues.Ks = 0.0;
+    _shadingValues.Kn = 16.0;
+    _shadingValues.Kt = 0.0;
+    _shadingValues.Kr = 0.0;
+    sceneObjects[sceneObjects.size()-1]->setShadingValues(_shadingValues);
+    sceneObjects[sceneObjects.size()-1]->setModelView(Translate(-0.5,0.0,0.0)*Scale(0.5, 0.5, 0.5)*RotateY(90));
   }
 }
 
@@ -651,7 +740,7 @@ void initGL(){
   TrackBall::build_rotmatrix(GLState::curmat, GLState::curquat);
   
   GLState::scalefactor = 1.0;
-  GLState::render_line = false;
+  GLState::render_line = true;
   
 }
 
@@ -693,7 +782,11 @@ void drawObject(Object * object, GLuint vao, GLuint buffer){
   glUniformMatrix4fv( GLState::ModelView, 1, GL_TRUE, objectModelView);
   
   glDrawArrays( GL_TRIANGLES, 0, object->mesh.vertices.size() );
-  
+/*
+  for (int i = 0 ; i < draw_points.size() ; ++i) {
+  	draw_vector(draw_points[i], draw_vectors[i]);
+  }
+  */
 }
 
 
@@ -784,7 +877,34 @@ int main(void){
     }
     
     glUniformMatrix4fv( GLState::Projection, 1, GL_TRUE, GLState::projection);
-    
+    	
+   /* std::cerr << "draw_points_size : " << draw_points.size() << "\n";
+
+	GLfloat current_color[4] = {0};
+	glGetFloatv(GL_CURRENT_COLOR, current_color);
+
+	GLfloat pointVertex[] = { width / 2.0f, height / 2.0f };
+	
+
+	 glBindVertexArray(vao);
+  	glBindBuffer( GL_ARRAY_BUFFER, buffer );
+	glEnableClientState(GL_VERTEX_ARRAY);
+	// glColor3f(1, 0, 0);
+	glPointSize(50);
+	glVertexPointer(2, GL_FLOAT, 0, pointVertex);
+	glDrawArrays(GL_POINTS, 0, 1);
+	glDisableClientState(GL_VERTEX_ARRAY);
+	//glDrawElements(GL_POINT, draw_points.size(), GL_FLOAT, draw_points.data());
+	//glDrawArrays(GL_POINTS, 0, 1)
+    //glDrawArrays(GL_POINTS, 0, draw_points.size());
+	// Reset color
+
+	//glColor3f(current_color[0], current_color[1], current_color[2]);
+
+    for(unsigned int i=0; i < draw_points.size(); i++){
+    	std::cerr << draw_points[i] << "\n";
+    }
+  */ 
     for(unsigned int i=0; i < sceneObjects.size(); i++){
       drawObject(sceneObjects[i], GLState::objectVao[i], GLState::objectBuffer[i]);
     }

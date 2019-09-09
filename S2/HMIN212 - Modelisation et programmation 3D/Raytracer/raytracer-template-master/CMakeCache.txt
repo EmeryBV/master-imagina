@@ -378,10 +378,10 @@ X11_Xrender_INCLUDE_PATH:PATH=/usr/include
 X11_Xrender_LIB:FILEPATH=/usr/lib/x86_64-linux-gnu/libXrender.so
 
 //Path to a file.
-X11_Xscreensaver_INCLUDE_PATH:PATH=X11_Xscreensaver_INCLUDE_PATH-NOTFOUND
+X11_Xscreensaver_INCLUDE_PATH:PATH=/usr/include
 
 //Path to a library.
-X11_Xscreensaver_LIB:FILEPATH=X11_Xscreensaver_LIB-NOTFOUND
+X11_Xscreensaver_LIB:FILEPATH=/usr/lib/x86_64-linux-gnu/libXss.so
 
 //Path to a file.
 X11_Xshape_INCLUDE_PATH:PATH=/usr/include

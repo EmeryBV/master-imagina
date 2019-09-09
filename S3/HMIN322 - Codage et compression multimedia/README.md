@@ -1,6 +1,6 @@
 # HMIN322 - Codage et compression multimedia
 
-## Sommaire
+## Table des matières
 
 [TOC]
 
@@ -49,6 +49,114 @@ graph TD
 - Texture
 - Couleurs
 
-# TP1
+- **Symmetric encryption by block** : DES, TEA, AES laisse des traces de l'ancienne image
 
-transformer image en palette
+## Format des images et colorimétrie
+
+Grande diversité d'image $ \Rightarrow $ difficulté à créer un compresseur efficace universel
+
+### Codage source
+
+- Compression
+- Chiffrement
+- Insertion de données cachées
+
+### Format d'un fichier image
+
+- **Header**
+  - Code : Magic number
+  - Format d'image en pixel : L x H
+  - Taille d'un pixel : 1 bit (binaire), 8 bits (monochrome), 24 bits (3 x 8 bits : vraies couleurs)
+
+- **Données images**
+  - Données des pixels
+  - Ordre de lecture des pixels
+  - Structures complexes
+
+- **Footer**
+  - Informations supplémentaires de l'image
+
+**Exemple** : Header pour le format PNM (Portable Any Map) 
+
+```
+P5
+512 512
+255
+# Commentaires
+```
+
+## Compression sans perte
+
+- **TGA** : Algorithme RLE
+- **GIF** :  Algorithme LZW
+- **PNG** : Algorithme LZ77
+- **TIFF** : Algorithme RLE + Codage prédictif
+- **JPEG** : Compression sans perte possible : Codage prédictif
+- **JPEG2000** : JPEGLS
+
+
+
+
+
+
+
+
+
+## TP1 - Palette
+
+
+
+
+
+## TP2 - Espace couleur
+
+Image RGB au format N x M $ \rightarrow $ 3 x M x N pixels
+
+en sortie on veux 1.5 x M x N pixels (Taux de compression à deux)
+
+ré-échantillonnage en prenant seulement 2 composantes
+
+$ \tau = { tailleImageOriginale \over tailleImageCompressé} $
+
+
+
+**1) Image compressé :**
+
+
+
+$ R = {{M \times N} \over 4} $avec ré-échantillonnage
+
+$ G = G $
+
+$ B = {{M \times N} \over 4} $ avec ré-échantillonnage
+
+
+
+$ P_{ech}SNR = 20.log_{10} {255^2 \over EQM} $
+
+$ EQM = {1 \over 3MN} \sum (p(i, j) -p'(i,j))^2 $
+
+$ SNR = {S \over B} $
+
+
+
+**2) RGB $ \rightarrow $ YCrCb :**
+
+
+
+Même chose en sacrifiant Cr et Cb
+
+
+
+**Conclusion** : cette compression marche mieux en YcrCb qu'en RGB
+
+
+
+
+
+## Théorie de l'information
+
+## Compression sans perte
+
+## Compression avec perte
+

@@ -30,7 +30,7 @@
 - Résiste aux attaques
 - Applicable dans des applications en temps réel
 
-![triange_chiffrement](.README.tex.assets/triange_chiffrement.svg)
+![triangle_chiffrement](.README.assets/triangle_chiffrement.svg)
 
 ## Hachage
 

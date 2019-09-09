@@ -25,10 +25,16 @@
 ## Insertion de données cachées
 
 - Invisible
+
 - Résiste aux transformations
+
 - Contrainte sur la longueur maximum du message
+
 - Résiste aux attaques
-- Applicable dans des applications en temps réel
+
+- Applicable dans des applications en temps réel 
+
+  ![Untitled Diagram.drawio](../../Untitled Diagram.drawio) 
 
 ```mermaid
 graph TD

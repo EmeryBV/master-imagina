@@ -29,6 +29,5 @@
 ### Semestre 4
 
 - [HMIN407 - Securite informatique](../../tree/master/S4/HMIN407%20-%20Securite%20informatique)
-
-+ [HMIN408 - Stage industriel](../../tree/master/S4/HMIN408%20-%20Stage%20industriel)
+- [HMIN408 - Stage industriel](../../tree/master/S4/HMIN408%20-%20Stage%20industriel)
 

@@ -1,6 +1,0 @@
-p('A','B');s('A','B');s('B','B')
-p(x,y)=>p(x,x)
-r(x,x,y)=>p(y,x)
-s(x,y)=>s(y,x)
-p(x,y);s(y,z)=>r(x,y,z)
-r(x,y,y)=>p(x,'C')

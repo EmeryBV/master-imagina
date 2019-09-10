@@ -8,7 +8,7 @@
 
 ### Examens
 
-- **Note finale** : 33% CC + 66% Exam
+- **Note finale** : 60% Exam + 40% TP
 
 ### Ressources
 

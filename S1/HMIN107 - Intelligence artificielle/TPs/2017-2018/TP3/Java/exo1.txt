@@ -1,8 +1,0 @@
-Herbivore('Goat');Cruel('Wolf')
-Cruel(x)=>Carnivore(x)
-Herbivore(x)=>Eat(x,'Grass')
-Carnivore(x);Herbivore(y)=>Eat(x,y)
-Carnivore(x)=>Drink(x,'Water')
-Herbivore(x)=>Drink(x,'Water')
-Eat(x,y)=>Consume(x,y)
-Drink(x,y)=>Consume(x,y)

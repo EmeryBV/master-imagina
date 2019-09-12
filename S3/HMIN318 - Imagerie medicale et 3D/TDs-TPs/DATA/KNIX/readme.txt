@@ -1,0 +1,1 @@
+Converti via ITKSnap pour lire le DICOM compressé d'Osirix.

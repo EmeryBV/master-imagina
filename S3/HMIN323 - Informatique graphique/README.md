@@ -12,7 +12,7 @@
 
 ### Ressources
 
-- [Cours et TDs-TPs](http://www.lirmm.fr/~ferber/societes_virtuelles/index.html)
+- [Cours et TDs-TPs](https://moodle.umontpellier.fr/course/view.php?id=5844)
 
 ## Synthèse d'images
 
@@ -22,3 +22,12 @@
 
 ## GLSL
 
+
+
+## Maillages
+
+charge maillage + envoie au GPU
+
+shader compiler
+
+envoyer les bonnes normales au sommets pour affichages sympa

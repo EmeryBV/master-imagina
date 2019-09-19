@@ -14,36 +14,33 @@
 /* Warning! the MPR value does not deal with the voxel size. It is assumed isotropic. */ 	
 
 #include "CImg.h"
+#include <iostream>
 #include <limits>
 #include <string>
 
 using namespace cimg_library;
 
 
-CImg<float> MIP(CImg<float>& img){
+void MIP(CImg<float>& img_in, CImg<float>& img_out){
 
-	CImg<float> mip = img;
-
-	for(int y = 0 ; y < img.height() ; y++)
+	for(int y = 0 ; y < img_in.height() ; y++)
 	{
-		for(int x = 0 ; x < img.width() ; x++)
+		for(int x = 0 ; x < img_in.width() ; x++)
 		{
 			float current_max = std::numeric_limits<float>::min();
 			int z_max = 0;
 
-			for(int z = 0 ; z < img.depth() ; z++)
+			for(int z = 0 ; z < img_in.depth() ; z++)
 			{
-				if(img(x, y, z) > current_max) {
-					current_max = img(x, y, z);
+				if(img_in(x, y, z) > current_max) {
+					current_max = img_in(x, y, z);
 					z_max = z;
 				}
 			}
 
-			mip(x, y, z_max) = current_max;
+			img_out(x, y, z_max) = current_max;
 		}
 	}
-
-	return std::move(mip);
 }
 
 /* Main program */
@@ -207,16 +204,22 @@ int main(int argc,char **argv)
 		{
 			/* Create a 2D image based on the MPR projections given by a projection point 
 			which is the intersection of the displayed slices */
-			CImg<float> mpr_img = img.get_projections2d(displayedSlice[0],displayedSlice[1],displayedSlice[2]);
-			// CImg<float> mpr_img = img.get_slice(displayedSlice[2]);
-			// CImg<float> mpr_img = img.get_slice(displayedSlice[2]);
-			
-			
+			CImg<float> visu = img;
+
 			if (visu_mode == "MIP")
 			{
-				mpr_img = MIP(mpr_img);
+				std::cerr << "MIP processing...\n";
+				MIP(img, visu);
 			}
-	
+			else
+			{
+				std::cerr << "Normal processing...\n";
+			}
+
+			CImg<float> mpr_img = visu.get_projections2d(displayedSlice[0],displayedSlice[1],displayedSlice[2]);
+			// CImg<float> mpr_img = img.get_slice(displayedSlice[2]);
+			// CImg<float> mpr_img = img.get_slice(displayedSlice[2]);
+			
 			/* The MPR image has a given size. It needs to be resized in order to fit at best in the display window */
 			mpr_img.resize(512,512); 
 			

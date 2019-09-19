@@ -97,3 +97,68 @@
     - Quand un joueur atteint la dernière colonne. A partir de son prochain tour, lors d'un déplacement le dé doit avoir une valeur strictement supérieure à la carte actuelle.
     - Le premier qui atteint le coté de l'adversaire à gagné
 
+## TIC-80 Game Jam
+
+### Ressources
+
+- [TIC-80 Wiki](https://github.com/nesbox/TIC-80/wiki)
+- [TIC-80 Games]([TIC-80 Wiki](https://github.com/nesbox/TIC-80/wiki))
+
+Rendu du jeu (html5 + .tic) le Dimanche à 23h59
+
+nouveau projet 
+
+new
+
+run
+
+F1-5 editeur de code
+
+image de fond que du BG
+
+ctrl+R run programme
+
+tuile 0 dans draw editor utilisé par default
+
+musique
+
+ w c v b n , (clavier piano)
+
+vert musique
+
+orange instrument
+
+Bleu volume
+
+
+
+langage lua
+
+0 1 2 3 = bouton de mouvemnet
+
+4 5 6 7 = bouton d'action
+
+// division arrondi
+
+sauvegarder projet
+
+save projet.tic
+
+get projet.tic // change le dossier
+
+
+
+export html
+
+
+
+import
+
+
+
+particles attack
+
+indicateur de direction et temps avant attack
+
+protect base from particles attack
+

@@ -6,6 +6,8 @@
 
 ## Informations
 
+- [Planning](https://moodle.umontpellier.fr/mod/page/view.php?id=190283)
+
 ### Examens
 
 - **Note finale** : 60% Exam + 40% (Projet + TP)
@@ -17,13 +19,13 @@
 
 ### À savoir
 
-- Choix de projet du 26 septembre au 3 octobre
-  - Acquisition 3D
-  - Visualisation 3D
-  - Segmentation 3D
+Choix des projets du 26 septembre au 3 octobre
+- Acquisition 3D
+- Visualisation 3D
+- Segmentation 3D
 
-  - Recalage 3D
-  - Analyse 3D
+- Recalage 3D
+- Analyse 3D
 
 ## Image 3D
 
@@ -51,3 +53,6 @@
 - On lance des rayons depuis le point de vue pour visualiser le volume
 - Plus le rayon pénètre dans le volume plus l'opacité réduit jusqu'à atteindre 1 d'opacité
 - Définition d'une courbe d'opacité sur nos gradient
+
+# Image 4D
+

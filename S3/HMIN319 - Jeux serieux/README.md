@@ -6,6 +6,8 @@
 
 ## Informations
 
+- [Planning](https://moodle.umontpellier.fr/course/view.php?id=1083)
+
 ### Examens
 
 - **Note finale** : 30% Exam + 70% Projet
@@ -40,33 +42,6 @@
 - Un équilibre entre les capacités et l’objectif
 
 ## Jeu de cartes
-
-### Idées
-
-- Séparer tete des nombres, chaque joueur pioche une tete, chaque tete à un nb de points de vie, les cartes de nombres infliges des dégats aux autres joueurs (sorte de rpg)
-- on peut contrer les degats avec les un types de cartes
-- points de vie noter avec des dées
-- on peut jouer par equipe et utiliser les cartes de coeur pour soins
-- bonus selon la tete nous représentant
-- faiblesse ou immunité selon le type de cartes
-
-- jeux de lancer de cartes
-- 10 pv, attack avec valeur et contre avec carte superieur
-- faire jeux de plateau avec cartes
-- Déplacement avec dés
-- Changer le terrain avec d'autres cartes
-- Faire plus que la carte avec un dé pour avancé
-
-- pique = montagne qu'on retourne
-- poser carte plus échange
-- As = mont blanc
-- tete = carte
-- poser carte après mouvement
-- sur la dernière carte il faut faire le nombre pile de la carte
-- Si le dé fait le même numéro que la carte ou on est un peux choisir entre se déplacer ou piocher 2 cartes 
-- carte qui fait reculer
-
-### Jeux de carte
 
 - **Plateau de jeu**
   - Une matrice de cartes de valeur (1 à 10 pas de têtes sur le terrain)  constitue le terrain de jeu
@@ -104,61 +79,84 @@
 - [TIC-80 Wiki](https://github.com/nesbox/TIC-80/wiki)
 - [TIC-80 Games]([TIC-80 Wiki](https://github.com/nesbox/TIC-80/wiki))
 
-Rendu du jeu (html5 + .tic) le Dimanche à 23h59
+## Synthèse de texte : Le jeux peut-il être sérieux ?
 
-nouveau projet 
+### Jeu :
 
-new
+- decision à prendre avec limite de contrainte ou n'importe quoi
+- incertitude margé
+- conséquences faible mais pas trop non plus (pour conserver l'interet)
 
-run
+### Jeu $ \neq $ sérieux ? :
 
-F1-5 editeur de code
+- jeu sérieux réside entre la frivolité et le sérieux
+- Tension entre apprendre et jouer
 
-image de fond que du BG
+## Conclusion
 
-ctrl+R run programme
+**Jeu** :
 
-tuile 0 dans draw editor utilisé par default
+- s'immerger dans un monde avec ses propres règles (graphismes, gameplay)
 
-musique
+**jeu sérieux** : 
 
- w c v b n , (clavier piano)
+- oblige de pousser la définition du terme jeu car notion de jeu dépend de la manière dont on perçoig l'activit
 
-vert musique
+## Jeux
 
-orange instrument
+Les éléments d'un jeux sont les suivants
 
-Bleu volume
+$$
+\boxed{
+\begin{array}{c}
+	\fbox{Action}	\\
+	\downarrow		\\
+	\fbox{Etat}		\\
+	\downarrow		\\
+	\fbox{Règles}	\\
+	\downarrow		\\
+	\fbox{Agents}	\\
+	\downarrow		\\
+	\fbox{Buts}		\\
+	\downarrow		\\
+	\fbox{Facteurs d'echecs}
+\end{array}
+}
+$$
 
+## Projet
 
+### Concept
 
-langage lua
-
-0 1 2 3 = bouton de mouvemnet
-
-4 5 6 7 = bouton d'action
-
-// division arrondi
-
-sauvegarder projet
-
-save projet.tic
-
-get projet.tic // change le dossier
-
-
-
-export html
-
-
-
-import
-
+- Public cible
+- Chaque action du joueur -> feedback
 
 
-particles attack
 
-indicateur de direction et temps avant attack
 
-protect base from particles attack
+
+```
+<img src='https://g.gravizo.com/svg?
+digraph G
+{
+  	node [shape = box];
+  	
+ 	subgraph "Game design"
+ 	{
+ 		label = "Game design";
+ 		Gameplay -> Prototype;
+ 	}
+ 	
+ 	subgraph Prototypage
+ 	{
+ 		label = Prototypage;
+ 		color = blue;
+ 		a -> b -> c;
+ 	}
+ 	
+ 	Concept -> Gameplay;
+	Concept -> a;
+}
+'/>
+```
 

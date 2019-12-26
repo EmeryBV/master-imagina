@@ -1,0 +1,2 @@
+Traitement appliqué :
+Encryption mode AES-CBC Clé utilisée : 2B28AB097EAEF7CF15D2154F16A6883C

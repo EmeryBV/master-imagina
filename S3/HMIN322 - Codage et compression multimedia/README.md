@@ -1,3 +1,5 @@
+
+
 # HMIN322 - Codage et compression multimedia
 
 ## Table des matières
@@ -13,6 +15,9 @@
 ### Ressources
 
 - [Cours et TDs-TPs](https://www.lirmm.fr/~wpuech/enseignement/master_informatique/Compression_Insertion/)
+- **Mail** : 
+  - sebastien.beugnon@lirmm.fr
+  - wpuech@lirmm.fr
 
 ## Sécurisation des données
 
@@ -114,27 +119,19 @@ $$
 
 
 
+$$
+\begin{pmatrix}
+	1 &   & 4 &   & 1 & 4 &       \\
+	7 & 7 & 7 & 7 & 7 & 7 & 7 & 7 \\
+	  &   &   &   &   &   &   &   \\
+	7 & 7 & 7 & 7 & 7 & 7 & 7 & 7 \\
+	3 & " " & 4 & " " & 3 " " & 4 & " "\\
+	7 & 7 & 7 & 7 & 7 & 7 & 7 & 7 \\
+	" " & " " & " " & " " & " " & " " & " " & " " \\
+	7 & 7 & 7 & 7 & 7 & 7 & 7 & 7 \\
+\end{pmatrix}
+$$
 
-
-
-
-
-
-
-
-
-
-
-```
-1 & " " & 4 & " " & 1 " " & 4 & " "\\
-7 & 7 & 7 & 7 & 7 & 7 & 7 & 7 \\
-" " & " " & " " & " " & " " & " " & " " & " " \\
-7 & 7 & 7 & 7 & 7 & 7 & 7 & 7 \\
-3 & " " & 4 & " " & 3 " " & 4 & " "\\
-7 & 7 & 7 & 7 & 7 & 7 & 7 & 7 \\
-" " & " " & " " & " " & " " & " " & " " & " " \\
-7 & 7 & 7 & 7 & 7 & 7 & 7 & 7 \\
-```
 
 1ere passe : 1 pixel (1/64)
 
@@ -439,107 +436,584 @@ RGB : 3 N pixels en NdB
 
 
 
+(Schéma distorsion)
+
+
+$$
+Z = { NbBitsImgOriginale  \over  NbBitsImgCompressée } \\
+$$
+Z : taux de compression : Z strictement croissant et Z >= 1
 
 
 
+distorsion PSNR
+
+WPSNR = PSNR pondéré
+$$
+EQM_w = {1 \over {N}} \sum {(p(i,j)-p'(i,j))^2 \over 1 + variance(p(i,j))}
+$$
+
+- Zone homogène : variance ~= 0 et EQM_w ~= EQM
+- Zone torturée : variance 
+- $ WPSNR = 10 \log_{10} { 255^2 \over EQM_w } $
+
+## Protection des média visuels
+
+Protection des données en insérant des données cachées
+
+Exemple : Disney protège ses modèles 3D pour éviter la contre façon
+
+11 septembre : plan d'attaques cachés dans des images de chats
+
+cinema : données caché en fonction de la salle qui permet de reperer la place d'ou les images ont été pris
+
+radio : données cachés inserer (texte)
 
 
 
+**Cryptographie** : Transforme les données originales de façon intelligible
+
+**Insertion de données cachées** : L'art de cacher des données de façon imperceptible au sein d'un média
 
 
 
+### Phase d'insertion
+
+le média est marqué avec un message secret à l'aide d'une clé secrète
+
+#### Mode d'insertion
+
+- **Injection** : Message insérer directement dans le média
+  - **Problème** : augmentation de la taille du support
+- **Substitution** : Le message est inséré de façon à remplacer l'information redondante du support (technique la plus utilisée)
+  - **Problème** : Altération du média
+- **Distorsion** : Analyse des différences entre objets supports et marqués.
+
+### Evaluation robustesse
+
+$$
+NE = |m| - |m'| + \sum_{i=0}^{|m|}
+$$
+
+- **Métriques subjectives**
+  - MOS (score d'opinion moyenne)
+  - Distance
+  - Perceptuelle
+- **Métriques objectives**
+  - PSNR
+  - RMSE (Root Mean Square Error)
+
+#### Sécurité
+
+- Le secret dépend de la clé et non de la méthode
 
 
 
+### Maillage 3D
 
-
-## TP1 - Palette
-
-réduction des couleurs d'une image en une palette de couleurs pertinente
-
-pas de jpeg compressé (PNG) ou format brut
-
-codage 24 bit -> 8 bits 
-
-taux de compression = 3
-
-trouver plus proche couleur est remplacage dans palette
-
-fichier text avec couleur de 0 a 255 puis valeur rgb (r g b)
-
-2 couleur aux choix
-
-ranger en fonciton de classe
-
-puis reparcourir avec moyenen
-
-au debut 2 couleur puis faire avec 256
-
-
-
-k-means : 256 couleurs
-
--> 256 couleurs pseudo-aléatoires (initialisation)
-
-ou
-
--> puis prendre couleur moyenne en 256
-
-ou
-
--> decoupe image en grille de 32x32 et prendre les couleur grace a la moyenne
-
-
-
-compte rendu
-
-
-
-image ref
-
-2 couluer init
-
-image crée + itération (calculté distance entre de couleur) (distance euclidienne)
-
-## TP2 - Espace couleur
-
-Image RGB au format N x M $ \rightarrow $ 3 x M x N pixels
-
-en sortie on veux 1.5 x M x N pixels (Taux de compression à deux)
-
-ré-échantillonnage en prenant seulement 2 composantes
-
-$ \tau = { tailleImageOriginale \over tailleImageCompressee } $
-
-**1) Image compressé :**
-
-$ R = {{M \times N} \over 4} $ avec ré-échantillonnage
-
-$ G = G $
-
-$ B = {{M \times N} \over 4} $ avec ré-échantillonnage
-
-
-
-$ SNR = {S \over B} $
-
-$ P_{ech}SNR = 20.log_{10} {255^2 \over EQM} $
-
-$ EQM = {1 \over 3MN} \sum (p(i,j) -p'(i,j))^2 $
-
-
-
-**2) RGB $ \rightarrow $ YCrCb :**
-
-Même chose en sacrifiant Cr et Cb
-
-**Conclusion** : cette compression marche mieux en YcrCb qu'en RGB
-
-
-
-## Théorie de l'information
+- 2-variété (2-manifold) : assure que le maillage est fermé
 
 ## Compression sans perte
 
-## Compression avec perte
+### 1) Synchronisation - VLC (Variable Length Coding)
+
+Soit une image avec :
+
+- 1 pixel : 3 bits
+
+- 1 pixel 9 bits
+
+le nombre de bit par pixels est variable, cela génère des **problème de synchronisation** comment fait-on pour lire les données il faudra une méthode spéciale pour lire les données de manière cohérentes ?
+
+**Objectif** : Attribuer les codes les plus court possible aux valeurs les plus probables
+$$
+\mathscr{H}(pixel) \leq longueur \leq \mathscr{H}(pixel) + \alpha
+$$
+**VLC** : Dictionnaire : mot <----> intensité lumineuse
+
+<u>Solutions</u> : 
+
+- bits de signalisation sur chaques mots ()
+- Codes à longueur fixes (=> longueur moyenne $ l $ est bien plus grande que l'entropie H(pixel))
+- Codes à longueur variables préfixés. $ l \approx \mathscr{H}(pixel) $
+
+Un code est dit préfixé si il n'est pas le début d'un autre code
+
+**Exemple** : {a, b, c, d, e, f}
+
+- a : 0
+- b : 100
+- c : 101
+- d : 110
+- e : 1110
+- f : 1111
+
+<u>Message</u> : 110(d) 0(a) 100(b) 0(a) 110(d) 101(c) 0(a) 0(a) 1111(f) 0(a) (deterministe)
+
+6 symboles : CLF : $ \log_2(6) = 3 bits/symbole $ (2 symboles avec 4 bits)
+
+### 2) Algorithme de Shannon-Faro
+
+VLC préfixé, source d'ordre 1 : L = 1
+
+#### Théoreme du codage de source sans bruit 
+
+- L : ordre d'extension d'un bloc B
+
+- li : longueur d'un bloc B, en nombre de bits
+
+- $ \overline{l} $ : la moyenne par pixel
+  - $ \overline{l} = { 1 \over L } \sum p(li)li)
+
+$$
+\forall \alpha > 0, \exists L, \forall i, \mathscr{H}(I) \leq \overline{l} \leq \mathscr{H}(I) + \alpha
+$$
+
+$$
+li = \lceil -log_2(p(i,j)) \rceil
+$$
+
+**Algorithme** :
+
+1. Trier les symboles par probabilité décroissante
+2. Séparer les symboles en 2 sous-groupes tel que $ p(G_1) \approx p(G_2) $
+
+3. - $ G_1 \Rightarrow $ Concatener avec un 0 sup 
+   - $ G_2 \Rightarrow $ Concatener avec un 1 sup
+4. Pour chaque sous-groupe retour en 2.
+5. Arrêt d'un sous-groupe s'il ne contient qu'un element
+
+
+
+**Exemple** : {$ p(\alpha_0) = 0.6, p(\alpha_1) = 0.3, p(\alpha_2) = 0.05, p(\alpha_3) = 0.05 $}
+$$
+\mathscr{H}(S) = \sum_{i=0}^3 p(\alpha_i) \log({1 \over p(\alpha_i)}) = 1.4 bits /symbole
+$$
+(Shéma Algo)
+
+
+
+| nul          | CLF            | truc | li               | shanon-faro      |
+| ------------ | -------------- | ---- | ---------------- | ---------------- |
+| $ \alpha_0 $ | 00             | 1    | 0                | 0                |
+| $ \alpha_1 $ | 01             | 2    | 10               | 10               |
+| $ \alpha_2 $ | 10             | 5    | 11000            | 110              |
+| $ \alpha_3 $ | 11             | 5    | 11001            | 111              |
+|              | 2 bits/symbole |      | 1.7 bits/symbole | 1.5 bits/symbole |
+
+**Efficacité d'un codage** :
+$$
+eff = { EntropieMessage \over longueurCode } = { 1.4 \over 1.5} 
+$$
+
+
+
+
+### 3) Algorithme de huffman
+
+**Algorithme**:
+
+1. Trier les symboles par probabilité décroissante
+2. - Regrouper les 2 symboles avec les probabilité les + grandes
+   - Remplacer les 2 symboles par le nouveau (avec sa pb)
+3. Retour en 2
+4. Arrêt quand il ne reste qu'un élément
+
+
+
+**Image télé** :
+
+Résolution : $ [720 \times576 + 2(720 \times 288)] \times 0.21 \approx200.10^3 bits$
+
+Image originale(entiers) => décorrélation => flottants => entiers => Codeur entropique => image compressé => décodeur entropique => transformée des intensité décorrélation => Image décompressé $ I' \approx I $
+
+
+
+### 4) Codage par plage
+
+#### a) RLE (Run Length Encoding)
+
+Principe : regrouper les pixels voisin ayant la même valeur
+
+RLE : VLC préfixé, ordre 2
+
+Couples : $ Q_i = (p_i, l_i) = (Ndg, LongueurDePlage) $
+
+**Exemple** : Ligne de pixels
+
+50 50 50 50 52 52 52 50 50 50 48 48 50
+$$
+Q_0(50,4) \\
+Q_1(52,3) \\
+Q_2(50,3) \\
+Q_3(48,2) \\
+Q_4(50,1) \\
+$$
+Images de synthèse : 
+
+- $ 0 \leq p_i \leq 255 $ : 256 couleurs
+- $ 1 \leq l_i \leq M \times N $ : taille de l'image
+
+longueur min / max de plages
+
+<u>Codage entropique</u> : les mots qui apparaissent souvent => codage court (Huffman)
+
+
+
+#### b) Blan binaire + RLT
+
+$ Q_i = {P_i, L_i} $
+
+Image ndg $ \rightarrow $ décomposition n plans binaires $ \left \{ \begin{array}\\ MSB\\ \vdots \\ LSB\end{array} \right. $
+
+$ Q_i = {l_i} \: \left \{ \begin{array}\\ 0 \rightarrow 1 \\ 1 \rightarrow 0\end{array} \right. $
+
+
+
+$ l_i < L_p $  déterministe
+
+<u>RLE + décomposition</u>
+$$
+\left .
+\begin{array}
+L_7 = 64 bits \\
+L_6 = L_5 = 32 bits \\
+L_4 = 16bits \\
+L_3 = 8bits \\
+4 \geq L_2 \geq 0 bits \\
+\end{array}
+\right \} Huffman \leftarrow \text{(LSB, LSB_0 : 00,01,10,11 non utilité)}\\
+L_0 = L_1 = 0 \text{ (non utilisé)}
+$$
+**Codage binaire** : $ p(i, j) = 127 \:(0111\:1111) \quad p(i, j+1)  = 128 \: (1000\:000) $
+
+**Code de gray** : valeurs voisines $ \Rightarrow $  codage voisins
+
+**Exemple** : 4 bits
+
+|      | 0    | 1    | 2    | 3    | 4    | 5    | 6    | 7    | 8    | 9    | 10   | 11   | 12   | 13   | 14   | 15   |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| 0    |      | █    |      | █    |      | █    |      | █    |      | █    |      | █    |      | █    |      | █    |
+| 1    |      |      | █    | █    |      |      | █    | █    |      |      | █    | █    |      |      | █    | █    |
+| 2    |      |      |      |      | █    | █    | █    | █    |      |      |      |      | █    | █    | █    | █    |
+| 3    |      |      |      |      |      |      |      |      | █    | █    | █    | █    | █    | █    | █    | █    |
+
+|      | 0    | 1    | 2    | 3    | 4    | 5    | 6    | 7    | 8    | 9    | 10   | 11   | 12   | 13   | 14   | 15   |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| 0    |      | █    | █    |      |      | █    | █    |      |      | █    | █    |      |      | █    | █    |      |
+| 1    |      |      | █    | █    | █    | █    |      |      |      |      | █    | █    | █    | █    |      |      |
+| 2    |      |      |      |      | █    | █    | █    | █    | █    | █    | █    | █    |      |      |      |      |
+| 3    |      |      |      |      |      |      |      |      | █    | █    | █    | █    | █    | █    | █    | █    |
+
+### 5) Codage à base de dictionnaire
+
+#### a) Codage statique
+
+Constructino d'un dictionnaire
+
+$ \rightarrow $ Liste de motifs : longueur fixe ou 
+
+**Exemple** : Mise en service de véhicules (fichier texte)
+
+MMAA : (0917)
+
+4 évènements	alphabet	10 symboles (0-9)
+
+véhicules de moins de 10 ans
+
+1 symbole : $ 4 bits \rightarrow 2^16 \approx \text{65536 mots} $
+
+10 symboles et 4 événements $ \rightarrow 10^4 $
+$$
+2^{13} < 10^4 < 2^{14} \\
+16 bis \rightarrow 14 bits \\
+01 \leq MM \leq 12 \quad \text{(12 mois)} \\
+10 \leq AA \leq 19 \quad \text{(10 dernières années)} \\
+$$
+$ 10^4 $ mots possibles $ \rightarrow 12 \times 10 = 120\:mots \rightarrow 7\:bits $
+
+véhicules plus ancien : bit de signalisation : 0 si mot $ \in $ dictionnaire 1 sinon
+$$
+\begin{array} \\
+0101 \quad (janvier 2010) & \Rightarrow & 0000\:0000 \\
+0210 \quad (fevrier 2010) & \Rightarrow & 0000\:0001 \\
+\vdots & & \vdots & \\
+1219 \quad (decembre 2019) & \Rightarrow & 1111\:0111 \\
+\end{array}
+$$
+
+#### b) codage à fenêtre glissante
+
+LZ77 : lesupel et ziv 1977
+
+taille de fenêtre : mémoire
+
+#### c) Codage dynamique
+
+LZ, LZ77, LZ78 $ \rightarrow $ LZW (Welch)
+
+Dictionnaire quasi vide au départ $ \rightarrow $ remplir au fur et à mesure
+
+**Dictionnaire** : 
+
+
+
+
+
+|            |  adresses  |  valeurs   |
+| :--------: | :--------: | :--------: |
+|     0      |    000     |     00     |
+| $ \vdots $ | $ \vdots $ | $ \vdots $ |
+|    255     |    0FF     |     FF     |
+| $ \vdots $ |    100     |   20, 31   |
+| $ \vdots $ |    101     |   31, 0A   |
+| $ \vdots $ |    102     |   0A, 20   |
+| $ \vdots $ |    103     |   20310A   |
+| $ \vdots $ | $ \vdots $ | $ \vdots $ |
+| $ \vdots $ |    FFF     | $ \vdots $ |
+
+**Algorithme** 
+
+```
+1. Initialisation:
+	i <- 0
+	c <- lireCaractèreSuivant()
+2. 	i++; j <- i
+	C_ij <- c
+3. 	c <- lireCaractèreSuivant()
+	chaine + c \in Dictionnaire ?
+	Oui : 
+		j++
+		C_ij <- c
+		chaine <- chaine + C_ij
+		retour en 3.
+	Non :
+		code <- &chaine
+		1er@ libre <- chaine + c
+		retour en 2.
+```
+
+**Exemple** : 20 31 0A 20 31 0A 20 41
+
+| chaine + c | $ \in $ Dictionnaire ? |             |           Nlle @           |
+| :--------: | :--------------------: | ----------- | :------------------------: |
+|   20, 31   |          non           | @20 = 020   | @20, 31 $ \leftarrow $ 100 |
+|   31, 0A   |          non           | @31 = 031   | @31, 0A $ \leftarrow $ 101 |
+|   0A, 20   |          non           | @0A = 001   |  @0A20 $ \leftarrow $ 102  |
+|   20, 31   |          oui           | @2031 = 100 |                            |
+| 20, 31, 0A |          non           |             | @20310A $ \leftarrow $ 103 |
+|            |                        |             |                            |
+
+### 6) Codage prédictif
+
+Idée : entre 2 pixels voisins il y a peu de différences
+$$
+p(i,j)\::\:pixel \\
+\hat{p}(i,j)\::\:\text{pixel voisins}\:(i \pm h,j \pm l) \\
+\varepsilon = p(i,j) - \hat{p}(i,j)
+$$
+
+$$
+\begin{array} \\
+\hat{p}(i,j) & = & A & = & \frac{3(A + C) - 2B}{4}\\
+			 & = & C & = & \cdots\\
+			 & = & \frac{A + C}{2} & = & \cdots\\
+			 & = & \frac{A + B}{2} & = & \cdots\\
+			 & = & A + C - B \\
+\end{array}
+$$
+
+
+
+##### JPEG sans perte : JPEGLS
+
+Codage prédictif avec préanalyse de l'image DPCM.
+
+chaque pixel p(i,j) :
+$$
+\begin{array} \\
+si \quad |A - B| < |B - C| \\
+alors \quad \hat{p}(i,j) = C \\
+sinon \quad \hat{p}(i,j) = A \\
+\end{array}
+$$
+
+### 7) Quantification
+
+#### a) Scalaire
+
+
+
+
+
+
+
+
+
+
+
+## Protection des données visuelles
+
+- Chiffrement (Cryptanalyse)
+- Tatouage / Stéganographie (Steganalyse)
+- Biométrie
+- Forensiques (Détection de manipulations, identification de capteurs)
+
+
+
+
+
+| +    | 0    | 1    | 2    | 3    | 4    | 5    | 6    |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| 0    | 0    | 1    | 2    | 3    | 4    | 5    | 6    |
+| 1    | 1    | 2    | 3    | 4    | 5    | 6    | 0    |
+| 2    | 2    | 3    | 4    | 5    | 6    | 0    | 1    |
+| 3    | 3    | 4    | 5    | 6    | 0    | 1    | 2    |
+| 4    | 4    | 5    | 6    | 0    | 1    | 2    | 3    |
+| 5    | 5    | 6    | 0    | 1    | 2    | 3    | 4    |
+| 6    | 6    | 0    | 1    | 2    | 3    | 4    | 5    |
+
+
+
+| *    | 0    | 1    | 2    | 3    | 4    | 5    | 6    |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| 0    | 0    | 0    | 0    | 0    | 0    | 0    | 0    |
+| 1    | 0    | 1    | 2    | 3    | 4    | 5    | 6    |
+| 2    | 0    | 2    | 4    | 6    | 1    | 3    | 5    |
+| 3    | 0    | 3    | 6    | 2    | 5    | 1    | 4    |
+| 4    | 0    | 4    | 1    | 5    | 2    | 6    | 3    |
+| 5    | 0    | 5    | 3    | 1    | 6    | 4    | 2    |
+| 6    | 0    | 6    | 5    | 4    | 3    | 2    | 1    |
+
+
+
+### TP - Chiffrement II
+
+
+
+a) Dans le cas d'un chiffrement parfait, quelle est la valeur de l'entropie pow : 
+
+- Image 512x512 pixels, 256 niveaux de gris $ \rightarrow $ **8 bpp**
+- Bloc de 16 pixels, 40 niveaux de gris $ \rightarrow $ **4 bpp**
+  - $ P(\alpha_i) = \frac{1}{16} $ 
+
+b) Démonstration avec
+
+- k : nombre de pixels
+- l : nombre de niveaux de gris
+
+**Rappel** :
+$$
+\begin{array} \\
+H(I) 	&= - \sum_{i = 0}^l p(\alpha_i) log_2(p(\alpha_i)) \\
+		&= - \sum_{i=0}^{15} \frac{1}{16}log_2(\frac{1}{16}) \\
+		&= -\log_2(\frac{1}{2^4}) \\
+		&= -(\log_2(1) - \log_2(2^4)) = \log_2{2^4} = 4 bpp
+\end{array}
+$$
+
+### Projets à choisir
+
+- Compression universelle
+
+- Normalisation
+
+- IDC dans données chiffrée
+
+- Super pixels
+
+- Détection d'images falsifiée CNN
+
+- Partage d'images secrètes
+
+### Stage Puech
+
+- Détecter des images modifié
+- Suivre poissons
+
+## Compression d'images JPEG
+
+Principe du codage arithmétiques
+
+On transforme une chaine binaire en une valeur flottante comprise entre 0 et 1
+
+On fait cela en calculant les probabilité d'avoir un 0 et celle d'avoir un 1
+
+**EXAMEN** : quantification JPEG
+
+
+
+
+
+algorithme
+
+
+
+3 images reconstruite
+
+image médicale  | Girafe | Couleur
+
+
+
+PSNR
+
+^
+
+|						*	
+
+|			*
+
+|										*
+
+------------------------------------------> debit bits/pixel
+
+plus les points sont vers la gauche mieux se sera
+
+
+
+# Examen
+
+savoir différence 
+- stégano  : communication secrete, dissimuler un message dans un medium (image, video, son...)
+- tatouage : 
+- chiffrement : 
+
+
+capacité d'insertion : nb maximale de bit a utilisé (en bit per pixels)
+
+Image originale (I) -> chiffrement (cle Ke) -> Image chiffré (Ie) -> Insertion (message + clé KW) -> Image chiffrée marqué (Iew)
+
+Naive I -> o -> Ie -> lsb substitution -> Iew
+
+homomorphisme : €(IoM) = €(I) o €(M)  (RSA, Paillier
+
+15 minutes par soutenances (10 presentation + 5 de question)
+
+
+Super pixels aller plus loins que la methode de super pixels (variance + algor naifs)
+supers pixels -> carte binaires -> couleurs rgb -> compresser au maximum
+compresser en RLE
+
+et on fait des experimentations courbe (debit selon qualité d'image) TRÈS IMPORTANT LES EXPERIMENTATIONS
+
+
+foutage de visage réversible (chiffrement séléctif) appliqué dct ou transformé en ondelettes puis faire du chiffrement selectif la-dedans
+appliquer algo de detection de visage deja présent (critère par rapport à l'apparence de la peau pour chiffré)
+
+
+meilleur compromis psnr + compression image
+
+
+
+
+introduction / context / motivation
+
+methode
+
+resultats
+
+conclusion
+
+super pixels (magnier thibault)
+
 

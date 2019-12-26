@@ -1,0 +1,3 @@
+treatment applied :
+Encryption mode AES -CBC
+ ,Key used : 2B28AB097EAEF7CF15D2154F16A6883C

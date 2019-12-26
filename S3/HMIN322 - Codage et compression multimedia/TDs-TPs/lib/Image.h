@@ -8,11 +8,13 @@
 #include <vector>
 #include <array>
 #include <cmath>
+#include <cassert>
 #include <map>
-
-//#include "image_pgm_ppm.h"
+#include <algorithm>
 
 typedef unsigned char OCTET;
+
+///////////////////////////// Objets d'images
 
 template<typename T>
 class ImageBase
@@ -26,6 +28,7 @@ public:
 
 	ImageBase()								: m_width(0), m_height(0), m_data() {}
 	ImageBase(size_t width, size_t height)	: m_width(width), m_height(height), m_data(m_width * m_height) {}
+	ImageBase(size_t width, size_t height, const T& value)	: m_width(width), m_height(height), m_data(m_width * m_height, value) {}
 	
 	void resize(size_t width, size_t height);
 
@@ -39,8 +42,8 @@ public:
 	const T& operator[](size_t n) const 	{ return this->m_data[n]; }
 
 	// Matrix style acess : data(i, j) =
-	T& operator()(size_t row, size_t column) 				{ this->m_data[row * this->width() + column]; }
-	const T& operator()(size_t row, size_t column) const 	{ this->m_data[row * this->width() + column]; }
+	T& operator()(size_t row, size_t column) 				{ return this->m_data[row * this->width() + column]; }
+	const T& operator()(size_t row, size_t column) const 	{ return this->m_data[row * this->width() + column]; }
 
 	T* data() 				{ return this->m_data.data(); }
 	const T* data() const 	{ return this->m_data.data(); }
@@ -83,15 +86,20 @@ class ImageIdentifiable : public ImageBase<T>
 {
 	using ImageBase<T>::ImageBase;
 
-	virtual const std::string identifier() const = 0;
 
 	void read(std::istream& is);
 	void write(std::ostream& os) const;
+
+public:
+	
+	virtual const std::string identifier() const = 0;
 };
 
 class ImagePGM : public ImageIdentifiable<OCTET>
 {
 	using ImageIdentifiable::ImageIdentifiable;
+
+public:
 
 	const std::string identifier() const { return "P5"; }
 };
@@ -99,15 +107,36 @@ class ImagePGM : public ImageIdentifiable<OCTET>
 template<typename T>
 struct Color;
 
-typedef Color<OCTET> RGB;
-typedef Color<float> RGBf;
+typedef Color<OCTET>	RGB;
+typedef Color<float>	RGBf;
+typedef Color<double>	RGBd;
 
 class ImagePPM : public ImageIdentifiable<RGB>
 {
 	using ImageIdentifiable::ImageIdentifiable;
 
+public:
+
+	ImagePPM(const ImagePGM& red, const ImagePGM& green, const ImagePGM& blue);
+
+	ImagePGM red() const;
+	ImagePGM green() const;
+	ImagePGM blue() const;
+
 	const std::string identifier() const { return "P6"; }
 };
+
+///////////////////////////// Fonctions d'images
+
+const std::string image_format_identifier(const std::string& identifier);
+
+bool is_pgm(const std::string& filename);
+bool is_ppm(const std::string& filename);
+
+void ignore_comment(std::istream& is);
+void ignore_characters(std::istream& is);
+
+///////////////////////////// Objets de couleurs
 
 template<typename T>
 struct Color
@@ -131,13 +160,14 @@ struct Color
 	Color operator/(const Color& c) const;
 	Color& operator/=(const Color& c);
 
-	Color operator*(float n) const;
-	Color& operator*=(float n);
+	Color operator*(double n) const;
+	Color& operator*=(double n);
 
-	Color operator/(float n) const;
-	Color& operator/=(float n);
+	Color operator/(double n) const;
+	Color& operator/=(double n);
 
 	bool operator<(const Color& c) const;
+	
 	// Cast operators
 	
 	template<typename U>
@@ -155,20 +185,6 @@ struct Color
 
 	operator OCTET*();
 };
-
-const std::string image_format_identifier(const std::string& identifier)
-{
-	if (identifier == "P5")
-		return "PGM";
-	
-	if (identifier == "P6")
-		return "PPM";
-
-	return "Unknown";
-}
-
-bool is_pgm(const std::string& filename);
-bool is_ppm(const std::string& filename);
 
 #include "Image.tpp"
 

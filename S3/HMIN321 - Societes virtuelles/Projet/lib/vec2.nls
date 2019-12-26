@@ -1,0 +1,66 @@
+;; vec2 est une liste de 2 valeur (x y)
+
+to-report vec2-create [x y]
+  report (list x y)
+end
+
+to-report vec2-x [v]
+  report item 0 v
+end
+
+to-report vec2-y [v]
+  report item 1 v
+end
+
+to-report angle-from-vec2 [v]
+  report atan item 0 v item 1 v
+end
+
+;; Netlogo n'est pas dans le repère classique: le 0 est vers le haut et les angles tournent vers la droite. De ce fait, x = sin angle dans ce référentiel...
+
+to-report vec2-from-angle [angle len]
+  report vec2-create (len * sin angle) (len * cos angle)
+end
+
+to-report vec2-eq [v1 v2]
+  report vec2-x v1 = vec2-x v2 and vec2-y v1 = vec2-y v2
+end
+
+to-report vec2-add [v1 v2]
+  report vec2-create (vec2-x v1 + vec2-x v2) (vec2-y v1 + vec2-y v2)
+end
+
+to-report vec2-sub [v1 v2]
+  report vec2-create (vec2-x v1 - vec2-x v2) (vec2-y v1 - vec2-y v2)
+end
+
+to-report vec2-multiply [v factor]
+  report vec2-create (vec2-x v * factor) (vec2-y v * factor)
+end
+
+to-report vec2-divide [v divider]
+  report vec2-create (vec2-x v / divider) (vec2-y v / divider)
+end
+
+to-report vec2-dot [v1 v2]
+  report (vec2-x v1 * vec2-x v2) + (vec2-y v1 * vec2-y v2)
+end
+
+to-report vec2-cross [v1 v2]
+  report (vec2-x v1 * vec2-y v2) - (vec2-y v1 * vec2-x v2)
+end
+
+to-report vec2-length-squared [v]
+  let x vec2-x v
+  let y vec2-y v
+  report (x * x) + (y * y)
+end
+
+to-report vec2-length [v]
+  report sqrt vec2-length-squared v
+end
+
+to-report vec2-normalize [v]
+	let l vec2-length v
+	report vec2-divide v l
+end

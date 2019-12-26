@@ -6,6 +6,8 @@
 
 ## Informations
 
+- [Planning](https://moodle.umontpellier.fr/mod/page/view.php?id=190260)
+
 ### Examens
 
 - **Note finale** : 60% Exam + 40% TP

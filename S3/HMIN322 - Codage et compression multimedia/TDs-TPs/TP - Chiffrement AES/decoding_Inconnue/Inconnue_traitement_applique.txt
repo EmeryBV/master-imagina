@@ -1,0 +1,2 @@
+Traitement appliqué :
+Decoding mode AES-OFB Clé utilisée : 0123ABC4567DEF890123ABC4567DEF89

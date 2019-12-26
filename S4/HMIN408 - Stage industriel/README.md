@@ -13,4 +13,7 @@
 ### Ressources
 
 - [Cours et TDs-TPs](https://www.lirmm.fr/~wpuech/enseignement/master_informatique/HMIN402_Securite_Informatique/)
+- **Responsable Stage Pro** : croitoru@lirmm.fr
+
+- [Plateforme de Stage](https://stagefds.univ-montp2.fr)
 

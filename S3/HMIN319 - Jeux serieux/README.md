@@ -160,3 +160,108 @@ digraph G
 '/>
 ```
 
+## Résumé
+
+### 1 - Game design
+
+- Stéréotype de joueurs : 
+- Flow : immerge-ment dans l'accomplissement du tâche
+- Fun : Apprentissage de nouveaux motifs (résolution d'un défi)
+- Game Design : règles du jeux, fun si règles bien apprises
+- Level design : environnement, retrouver les règles à partir des niveaux
+- Courbe difficulté : plus des vaguelettes (moment tendu / tranquillle) pour ne pas fatiguer le joueur
+- Boucle de Gameplay OCR : Objectif -> Challenge -> Récompense
+- Briques de Game et play :
+  - Play : Déplacer, Choisir, Gerer, Tirer, Ecrire, Aléatoire, Creer
+  - Game : Atteindre, Eviter, Detruire
+
+### 3 - Jeu
+
+- Structure d'un jeu : 
+
+$$
+\boxed{
+\begin{array}{c}
+	\fbox{Action}	\\
+	\downarrow		\\
+	\fbox{Etat}		\\
+	\downarrow		\\
+	\fbox{Règles}	\\
+	\downarrow		\\
+	\fbox{Agents}	\\
+	\downarrow		\\
+	\fbox{Buts}		\\
+	\downarrow		\\
+	\fbox{Facteurs d'echecs}
+\end{array}
+}
+$$
+
+- Mauvais gameplay : mauvaise expérience joueur même si level design très bon
+- Conception du gameplay
+  - Coeur de gameplay
+  - Contrôles
+  - Vue
+  - Personnages
+  - Feedback
+  - Boucle OCR
+
+### 4 - Patterns de programmation de jeux
+
+- Bonne architecture : 
+  - Anticipe les changements
+  - S’accommode avec les changements
+  - Minimise apprentissage
+  - Facilite le codage
+  - Maintien la phase de validation
+- Design patterns :
+  - Command : requete dans objet
+    - Parametrable
+    - Sauvegardable
+  - Observer : permet de notifié les objet en relation de changements
+  - Prototype : Permet de créer des objet en utilisant un instance
+  - State : Objet modifie son comportement en fonction de son état interne
+  - Entity-System : resout les problèmes de l'OO (longues chaines héritages, réutilisation)
+    - Caractèristiques :
+      - composition au lieux d'heritage
+      - flexible
+      - meilleur controle des interactions
+      - perte de performances
+    - Entity
+      - Id
+      - Hierarchit d'entités
+    - Composents
+      - data
+      - comportements
+      - ajout / retirer entités
+
+## 5 - Monomythe
+
+- Théorie : Tout les mythes on des points communs dans leurs signification, car ils sont créent par des humains qui tentent d'expliquer les phénomènes sociales, et les mystères encore incompris.
+- L'aventure : 
+  - Séparation : pretexte pour partir à l'aventure dans un monde inconnu
+  - Initiation : mentor l'aidera dans se nouveau monde inconnu
+    - moment ou le héro meur pour revenir plus fort
+  - Retour : héro grandi arrive à résoudre ses problèmes
+
+## 6 - Méthode d'évaluation expérimentale
+
+- Objectifs
+  - Evaluer un jeux
+  - Collecter, résumer, interpreter, presenter les résultats
+- Statistiques :
+  - Echantillon représentatif de la population qui la représente
+  - Utilisation :
+  - 1 - fixer la population + objectif etude
+  - 2 - calculer statistiques descriptives (moyenne, variance, déviation...)
+  - 3 - repondre à différence des statistique causé par erreur échantillonage
+  - Corrélation != cosalité
+- Causalité déduite par méthode experimentale : montrer cause et effet entre deux variables
+  - manipulation : manipuler variable en observant une autre
+  - controle : par d'influence externe
+- Mode : valeur avec la plus grande fréquence
+- déviation : difference avec la moyenne
+- variance : moyenne des déviations au carré
+- **z-score** : z_i = deviation / ecart_type (deviation_standard)
+- erreur standard : ecart_type / \sqrt(n)
+- **t-score** : meme principe mais avec M au lieux de µ

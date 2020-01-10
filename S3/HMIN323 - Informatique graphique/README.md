@@ -16,26 +16,83 @@
 
 - [Cours et TDs-TPs](https://moodle.umontpellier.fr/course/view.php?id=5844)
 
-## Synthèse d'images
+## GLSL : Opengl Shading Langage
 
-- Temps réel (OpenGl)
-- Rendu en temps maîtrisé (Films)
-- Rendu physiquement réaliste (Simulations)
+### Ressources
 
-### Composants
+- [GLSL overview vidéo](https://www.youtube.com/watch?v=uOErsQljpHs)
+- [GLSL langage wiki](https://www.khronos.org/opengl/wiki/OpenGL_Shading_Language)
+- [GLSL functions](https://www.shaderific.com/glsl-functions)
 
-- Lumière
-- Camera
-- Modèle 3D
-- matériaux
+### Définitions
 
-## GLSL
+**OpenGL** : interface de programmation sous forme de machine à état permettant de communiquer avec le GPU.
 
-- **Vertex Shader**
-- Assemblage
-- Rasterization
-- **Fragment Shader**
-- Per fragment operations
+**Shader** : petit programme qui s’exécute sur le GPU permettant de paralléliser facilement les calculs sur des points.
+
+### Langage
+
+GLSL est un mélange entre le C et le C++. Il reprend en grande partie la même syntaxe et les mêmes types avec quelques ajouts et/ou modifications.
+
+#### Types
+
+- **Scalaires** : `bool, int, uint, float, double`
+- **Vecteurs** : `bvecN, ivecN, uvecN, vecN, dvecN` (avec $$N \in [2, 4]$$)
+- **Matrices** : `matNxM, matN` (avec $N, M \in [2, 4]$)
+- **Opaques** : `sampler, image, struct, array` (sampler == texture)
+
+#### Fonctionnalités
+
+- **Swizzling** : `vec4 v4 = other_vec.xyxx; vec2 v2 = other_vec.yx ` (on peut faire n'importe quel combinaison de xyzw)
+- **Swizzle masks** : `v.xyzw == v.rgba == v.stpq;` (les valeurs sont identiques mais cela permet de rendre plus lisible le code. On utilise `.rgba` pour les couleurs et `.stpq` pour les textures)
+
+### Opengl Shaders
+
+#### Vertex Shader
+
+Il traite les sommets (Projection / Déplacement).
+
+```glsl
+#version 130 // Compatible avec OpenGL 3.0
+
+uniform mat4 MVP;
+
+// Remplacer "attribute" par "in" quand GLSL version > 130
+
+attribute vec3 v_position; 
+attribute vec3 v_color;
+
+// Remplacer "varying" par "out" quand GLSL version > 130
+
+varying vec3 color;
+
+void main()
+{
+	// Transform all vertices with Model View Projection matrix.
+    gl_Position = MVP * vec4(vertex_position, 1.0);
+    
+    // Passage de la couleur v_color au fragment shader.
+    color = v_color;
+}
+```
+
+#### Fragment Shader
+
+Il traite les pixels (Couleur / Plaquage de textures).
+
+```glsl
+#version 130 // Compatible avec OpenGL 3.0
+
+varying vec3 color;
+
+void main()
+{
+	// Colorize all triangles with the same color
+    gl_FragColor = vec4(color, 1.0);
+}
+```
+
+
 
 ## Maillages
 
@@ -116,78 +173,18 @@
   - F : nombre de faces
   - g : nombre de trous dans un objet fermé
 
+## TP2 : Maillages
 
+- Calculer normales par faces
+- Calculer 1-voisinage sommets
+- Calculer valence sommets
 
+## TP3 : Gmap
 
+- Exercice sur gmap cours
 
-## GLSL : Opengl Shading Langage
+## TP4 : Lissage
 
-### Ressources
-
-- [GLSL overview vidéo](https://www.youtube.com/watch?v=uOErsQljpHs)
-- [GLSL langage wiki](https://www.khronos.org/opengl/wiki/OpenGL_Shading_Language)
-- [GLSL functions](https://www.shaderific.com/glsl-functions)
-
-### Définitions
-
-**OpenGL** : interface de programmation sous forme de machine à état permettant de communiquer avec le GPU.
-
-**Shader** : petit programme qui s’exécute sur le GPU permettant de paralléliser facilement les calculs sur des points.
-
-### Langage
-
-GLSL est un mélange entre le C et le C++. Il reprend en grande partie la même syntaxe et les mêmes types avec quelques ajouts et/ou modifications.
-
-#### Types
-
-- **Scalaires** : `bool, int, uint, float, double`
-- **Vecteurs** : `bvecN, ivecN, uvecN, vecN, dvecN` (avec $$N \in [2, 4]$$)
-- **Matrices** : `matNxM, matN` (avec $N, M \in [2, 4]$)
-- **Opaques** : `sampler, image, struct, array` (sampler == texture)
-
-#### Fonctionnalités
-
-- **Swizzling** : `vec4 v4 = other_vec.xyxx; vec2 v2 = other_vec.yx ` (on peut faire n'importe quel combinaison de xyzw)
-- **Swizzle masks** : `v.xyzw == v.rgba == v.stpq;` (les valeurs sont identiques mais cela permet de rendre plus lisible le code. On utilise `.rgba` pour les couleurs et `.stpq` pour les textures)
-
-### Opengl Shaders
-
-#### Vertex Shader
-
-Il traite les sommets (Projection / Déplacement).
-
-```glsl
-#version 130 // Compatible avec OpenGL 3.0.
-
-uniform mat4 MVP;
-attribute vec3 v_position;
-attribute vec3 v_color;
-
-varying vec3 color;
-
-void main()
-{
-	// Transform all vertices with Model View Projection matrix.
-    gl_Position = MVP * vec4(vertex_position, 1.0);
-    
-    // Passage de la couleur v_color au fragment shader.
-    color = v_color;
-}
-```
-
-### Fragment Shader
-
-Il traite les pixels (Couleur / Plaquage de textures).
-
-```glsl
-#version 130 // Compatible avec OpenGL 3.0.
-
-varying vec3 color;
-
-void main()
-{
-	// colorize all triangles with the same color
-    gl_FragColor = vec4(color, 1.0);
-}
-```
-
+- Calculer opérateur Laplacien uniforme
+- Calculer opérateur Laplace-Beltrami
+- Maillages equi = bonne qualité

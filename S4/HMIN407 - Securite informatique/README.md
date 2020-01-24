@@ -12,7 +12,7 @@
 
 ### Ressources
 
-- [Cours et TDs-TPs](https://www.lirmm.fr/~wpuech/enseignement/master_informatique/HMIN402_Securite_Informatique/)
+- [Cours et TDs-TPs](http://www.lirmm.fr/~wpuech/enseignement/master_informatique/HMIN407_Securite_Informatique/)
 
 ## Protection des images médicales
 
